@@ -26,5 +26,9 @@ public class Piece {
 	
 	public boolean isWhite(){
 		return isWhite;
-	}	
+	}
+	
+	public TypePiece type() {
+		return type;
+	}
 }

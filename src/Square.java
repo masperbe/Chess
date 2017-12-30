@@ -24,6 +24,10 @@ public class Square {
 	
 	public void setPiece(Piece piece) {
 		this.piece = piece;
+		if (piece == null)
+			occupied = false;
+		else
+			occupied = true;
 	}
 	
 	public boolean isOccupied() {

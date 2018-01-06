@@ -1,13 +1,19 @@
 
 public class Board {
 	
-	public Square[][] board;
+	public Square[][] board = new Square[8][8];
+		
 	private int moveNumber;
 	private boolean whiteMove;
 	private boolean gameInProgress;
 	
+	public Board() {
+		for (int i=0; i<8; i++)
+			for (int j=0; j<8; j++)
+				board[i][j] = new Square();
+	}
+	
 	public void newGame(){
-		board = new Square[8][8];
 		board[0][0].setPiece(new Piece (true, Piece.TypePiece.ROOK));
 		board[1][0].setPiece(new Piece (true, Piece.TypePiece.KNIGHT));
 		board[2][0].setPiece(new Piece (true, Piece.TypePiece.BISHOP));

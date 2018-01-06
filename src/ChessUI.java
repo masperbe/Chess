@@ -54,9 +54,32 @@ public class ChessUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		ImageIcon boardIcon = new ImageIcon("img/cboard.png");
+		JLabel boardImg = new JLabel();
+		boardImg.setIcon(boardIcon);
+		boardImg.setBounds(286,50,808,808);
+		frame.getContentPane().add(boardImg);
+		
+		ImageIcon whitePawnIcon = new ImageIcon("img/wpawn.png");
+		ImageIcon whiteKnightIcon = new ImageIcon("img/wknight.png");
+		ImageIcon whiteBishopIcon = new ImageIcon("img/wbishop.png");
+		ImageIcon whiteRookIcon = new ImageIcon("img/wrook.png");
+		ImageIcon whiteQueenIcon = new ImageIcon("img/wqueen.png");
+		ImageIcon whiteKingIcon = new ImageIcon("img/wking.png");
+		ImageIcon blackPawnIcon = new ImageIcon("img/bpawn.png");
+		ImageIcon blackKnightIcon = new ImageIcon("img/bknight.png");
+		ImageIcon blackBishopIcon = new ImageIcon("img/bbishop.png");
+		ImageIcon blackRookIcon = new ImageIcon("img/brook.png");
+		ImageIcon blackQueenIcon = new ImageIcon("img/bqueen.png");
+		ImageIcon blackKingIcon = new ImageIcon("img/bking.png");
+		JLabel[][] squareIcon = new JLabel[8][8];
+		for (int i=0; i<8; i++)
+			for (int j=0; j<8; j++)
+				squareIcon[i][j] = new JLabel();
+		
 		JButton btnNewGame = new JButton("New Game?");
 		btnNewGame.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 82));
-		btnNewGame.setBounds(12, 825, 720, 115);
+		btnNewGame.setBounds(12, 12, 720, 115);
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				board.newGame();
@@ -65,21 +88,52 @@ public class ChessUI {
 						if (board.board[i][j].isOccupied())
 							if (board.board[i][j].getPiece().isWhite())
 								switch (board.board[i][j].getPiece().type()) {
-									case Piece.TypePiece.PAWN: square[i][j].setIcon(whitePawnIcon);
+									case PAWN: squareIcon[i][j].setIcon(whitePawnIcon);
 									break;
 									
-									case Piece.TypePiece.KNIGHT: square[i][j].setIcon(whiteKnightIcon);
+									case KNIGHT: squareIcon[i][j].setIcon(whiteKnightIcon);
+									break;
+									
+									case BISHOP: squareIcon[i][j].setIcon(whiteBishopIcon);
+									break;
+									
+									case ROOK: squareIcon[i][j].setIcon(whiteRookIcon);
+									break;
+									
+									case QUEEN: squareIcon[i][j].setIcon(whiteQueenIcon);
+									break;
+									
+									case KING: squareIcon[i][j].setIcon(whiteKingIcon);
 									break;
 								}
 							else 
 								switch (board.board[i][j].getPiece().type()) {
-								case Piece.TypePiece.PAWN: square[i][j].setIcon(blackPawnIcon);
+								case PAWN: squareIcon[i][j].setIcon(blackPawnIcon);
 								break;
 								
-								case Piece.TypePiece.KNIGHT: square[i][j].setIcon(blackKnightIcon);
+								case KNIGHT: squareIcon[i][j].setIcon(blackKnightIcon);
+								break;
+								
+								case BISHOP: squareIcon[i][j].setIcon(blackBishopIcon);
+								break;
+								
+								case ROOK: squareIcon[i][j].setIcon(blackRookIcon);
+								break;
+								
+								case QUEEN: squareIcon[i][j].setIcon(blackQueenIcon);
+								break;
+								
+								case KING: squareIcon[i][j].setIcon(blackKingIcon);
 								break;
 							}
-							
+				for (int i=0; i<8; i++) {
+					for (int j=0; j<8; j++) {
+						squareIcon[i][j].setBounds(300 + (101*i), 800 - (101*j),50,50);
+						frame.getContentPane().add(squareIcon[i][j]);
+					}
+				}
+				frame.getContentPane().add(boardImg);
+				frame.repaint();
 			}
 		});
 		frame.getContentPane().add(btnNewGame);
@@ -96,11 +150,6 @@ public class ChessUI {
 		lblTextOutput.setBounds(12, 726, 1458, 86);
 		frame.getContentPane().add(lblTextOutput);
 		
-		ImageIcon boardIcon = new ImageIcon("img/cboard.png");
-		JLabel boardImg = new JLabel();
-		boardImg.setIcon(boardIcon);
-		boardImg.setBounds(286,50,953,663);
-		frame.getContentPane().add(boardImg);
 		
 		//JButton btnChessBoardGoes = new JButton("Chess board goes here");
 		//btnChessBoardGoes.setBounds(286, 50, 953, 663);

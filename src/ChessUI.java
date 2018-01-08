@@ -15,10 +15,15 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.JTextField;
 
 public class ChessUI {
 
 	private JFrame frame;
+	private JTextField textFieldX1;
+	private JTextField textFieldY1;
+	private JTextField textFieldX2;
+	private JTextField textFieldY2;
 
 	/**
 	 * Launch the application.
@@ -50,14 +55,14 @@ public class ChessUI {
 		Board board = new Board();
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1500, 1000);
+		frame.setBounds(100, 100, 1200, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		ImageIcon boardIcon = new ImageIcon("img/cboard.png");
 		JLabel boardImg = new JLabel();
 		boardImg.setIcon(boardIcon);
-		boardImg.setBounds(286,50,808,808);
+		boardImg.setBounds(216,128,568,568);
 		frame.getContentPane().add(boardImg);
 		
 		ImageIcon whitePawnIcon = new ImageIcon("img/wpawn.png");
@@ -79,7 +84,7 @@ public class ChessUI {
 		
 		JButton btnNewGame = new JButton("New Game?");
 		btnNewGame.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 82));
-		btnNewGame.setBounds(12, 12, 720, 115);
+		btnNewGame.setBounds(161, 0, 720, 115);
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				board.newGame();
@@ -139,15 +144,19 @@ public class ChessUI {
 		frame.getContentPane().add(btnNewGame);
 		
 		JButton btnDrawAccepted = new JButton("Propose draw?");
-		btnDrawAccepted.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 82));
-		btnDrawAccepted.setBounds(744, 825, 726, 115);
+		btnDrawAccepted.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnDrawAccepted.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 36));
+		btnDrawAccepted.setBounds(993, 660, 177, 80);
 		frame.getContentPane().add(btnDrawAccepted);
 		
-		JLabel lblTextOutput = new JLabel("Would you like to play a game of chess?");
+		JLabel lblTextOutput = new JLabel("Would you like to play a game of chess?"); 
 		lblTextOutput.setVerticalAlignment(SwingConstants.TOP);
 		lblTextOutput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTextOutput.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 38));
-		lblTextOutput.setBounds(12, 726, 1458, 86);
+		lblTextOutput.setBounds(818, 143, 352, 144);
 		frame.getContentPane().add(lblTextOutput);
 		
 		
@@ -155,16 +164,55 @@ public class ChessUI {
 		//btnChessBoardGoes.setBounds(286, 50, 953, 663);
 		//frame.getContentPane().add(btnChessBoardGoes);
 		
-		JButton btnCapturedWhite = new JButton("Caputred white pieces go here");
-		btnCapturedWhite.setBounds(35, 50, 239, 314);
+		JButton btnCapturedWhite = new JButton("Caputred white pieces");
+		btnCapturedWhite.setBounds(12, 165, 192, 249);
 		frame.getContentPane().add(btnCapturedWhite);
 		
-		JButton btnCapturedBlack = new JButton("Captured black pieces go here");
-		btnCapturedBlack.setBounds(35, 369, 239, 344);
+		JButton btnCapturedBlack = new JButton("Captured black pieces");
+		btnCapturedBlack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnCapturedBlack.setBounds(12, 427, 192, 249);
 		frame.getContentPane().add(btnCapturedBlack);
 		
 		JButton btnMovePointer = new JButton("Move pointer goes here");
 		btnMovePointer.setBounds(1251, 219, 219, 325);
 		frame.getContentPane().add(btnMovePointer);
+		
+		JLabel lblMovePiece = new JLabel("Move your pieces here");
+		lblMovePiece.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 36));
+		lblMovePiece.setBounds(818, 291, 239, 53);
+		frame.getContentPane().add(lblMovePiece);
+		
+		textFieldX1 = new JTextField();
+		textFieldX1.setBounds(818, 357, 116, 22);
+		frame.getContentPane().add(textFieldX1);
+		textFieldX1.setColumns(10);
+		
+		textFieldY1 = new JTextField();
+		textFieldY1.setBounds(818, 392, 116, 22);
+		frame.getContentPane().add(textFieldY1);
+		textFieldY1.setColumns(10);
+		
+		textFieldX2 = new JTextField();
+		textFieldX2.setBounds(818, 427, 116, 22);
+		frame.getContentPane().add(textFieldX2);
+		textFieldX2.setColumns(10);
+		
+		textFieldY2 = new JTextField();
+		textFieldY2.setBounds(818, 462, 116, 22);
+		frame.getContentPane().add(textFieldY2);
+		textFieldY2.setColumns(10);
+		
+		JLabel lblCanMove = new JLabel("You cant move that piece there");
+		lblCanMove.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 36));
+		lblCanMove.setBounds(818, 497, 352, 80);
+		frame.getContentPane().add(lblCanMove);
+		
+		JButton btnForfeit = new JButton("Forfeit?");
+		btnForfeit.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 36));
+		btnForfeit.setBounds(796, 660, 177, 80);
+		frame.getContentPane().add(btnForfeit);
 	}
 }

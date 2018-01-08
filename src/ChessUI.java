@@ -133,7 +133,7 @@ public class ChessUI {
 							}
 				for (int i=0; i<8; i++) {
 					for (int j=0; j<8; j++) {
-						squareIcon[i][j].setBounds(300 + (101*i), 800 - (101*j),50,50);
+						squareIcon[i][j].setBounds(225 + (71*i), 632 - (71*j),50,50);
 						frame.getContentPane().add(squareIcon[i][j]);
 					}
 				}

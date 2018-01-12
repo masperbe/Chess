@@ -207,12 +207,17 @@ public class ChessUI {
 		
 		JLabel lblCanMove = new JLabel("You cant move that piece there");
 		lblCanMove.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 36));
-		lblCanMove.setBounds(818, 497, 352, 80);
+		lblCanMove.setBounds(818, 567, 352, 80);
 		frame.getContentPane().add(lblCanMove);
 		
 		JButton btnForfeit = new JButton("Forfeit?");
 		btnForfeit.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 36));
 		btnForfeit.setBounds(796, 660, 177, 80);
 		frame.getContentPane().add(btnForfeit);
+		
+		JButton btnSubmitMove = new JButton("Submit Move?");
+		btnSubmitMove.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 36));
+		btnSubmitMove.setBounds(818, 497, 352, 80);
+		frame.getContentPane().add(btnSubmitMove);
 	}
 }

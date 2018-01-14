@@ -20,10 +20,8 @@ import javax.swing.JTextField;
 public class ChessUI {
 
 	private JFrame frame;
-	private JTextField textFieldX1;
-	private JTextField textFieldY1;
-	private JTextField textFieldX2;
-	private JTextField textFieldY2;
+	private JTextField textFieldOrigin;
+	private JTextField textFieldDestination;
 
 	/**
 	 * Launch the application.
@@ -152,19 +150,14 @@ public class ChessUI {
 		btnDrawAccepted.setBounds(993, 660, 177, 80);
 		frame.getContentPane().add(btnDrawAccepted);
 		
-		JLabel lblTextOutput = new JLabel("Would you like to play a game of chess?"); 
+		JLabel lblTextOutput = new JLabel("<html>Would you like to play a game of chess?</html>"); 
 		lblTextOutput.setVerticalAlignment(SwingConstants.TOP);
 		lblTextOutput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTextOutput.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 38));
 		lblTextOutput.setBounds(818, 143, 352, 144);
 		frame.getContentPane().add(lblTextOutput);
 		
-		
-		//JButton btnChessBoardGoes = new JButton("Chess board goes here");
-		//btnChessBoardGoes.setBounds(286, 50, 953, 663);
-		//frame.getContentPane().add(btnChessBoardGoes);
-		
-		JButton btnCapturedWhite = new JButton("Caputred white pieces");
+		JButton btnCapturedWhite = new JButton("Captured white pieces");
 		btnCapturedWhite.setBounds(12, 165, 192, 249);
 		frame.getContentPane().add(btnCapturedWhite);
 		
@@ -182,30 +175,20 @@ public class ChessUI {
 		
 		JLabel lblMovePiece = new JLabel("Move your pieces here");
 		lblMovePiece.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 36));
-		lblMovePiece.setBounds(818, 291, 239, 53);
+		lblMovePiece.setBounds(818, 280, 239, 44);
 		frame.getContentPane().add(lblMovePiece);
 		
-		textFieldX1 = new JTextField();
-		textFieldX1.setBounds(818, 357, 116, 22);
-		frame.getContentPane().add(textFieldX1);
-		textFieldX1.setColumns(10);
+		textFieldOrigin = new JTextField();
+		textFieldOrigin.setBounds(818, 357, 116, 22);
+		frame.getContentPane().add(textFieldOrigin);
+		textFieldOrigin.setColumns(10);
 		
-		textFieldY1 = new JTextField();
-		textFieldY1.setBounds(818, 392, 116, 22);
-		frame.getContentPane().add(textFieldY1);
-		textFieldY1.setColumns(10);
+		textFieldDestination = new JTextField();
+		textFieldDestination.setBounds(818, 427, 116, 22);
+		frame.getContentPane().add(textFieldDestination);
+		textFieldDestination.setColumns(10);
 		
-		textFieldX2 = new JTextField();
-		textFieldX2.setBounds(818, 427, 116, 22);
-		frame.getContentPane().add(textFieldX2);
-		textFieldX2.setColumns(10);
-		
-		textFieldY2 = new JTextField();
-		textFieldY2.setBounds(818, 462, 116, 22);
-		frame.getContentPane().add(textFieldY2);
-		textFieldY2.setColumns(10);
-		
-		JLabel lblCanMove = new JLabel("You cant move that piece there");
+		JLabel lblCanMove = new JLabel("");
 		lblCanMove.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 36));
 		lblCanMove.setBounds(818, 567, 352, 80);
 		frame.getContentPane().add(lblCanMove);
@@ -218,6 +201,198 @@ public class ChessUI {
 		JButton btnSubmitMove = new JButton("Submit Move?");
 		btnSubmitMove.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 36));
 		btnSubmitMove.setBounds(818, 497, 352, 80);
+		btnSubmitMove.addActionListener(new ActionListener() {
+			public void actionPerformed (ActionEvent ae) {
+				String origin = textFieldOrigin.getText();
+				String destination = textFieldDestination.getText();
+				int x1;
+				int y1;
+				int x2;
+				int y2;
+				try {
+					switch (origin.charAt(0)) {
+						case 'a':
+							x1 = 0;
+							break;
+						case 'b':
+							x1 = 1;
+							break;
+						case 'c':
+							x1 = 2;
+							break;
+						case 'd':
+							x1 = 3;
+							break;
+						case 'e':
+							x1 = 4;
+							break;
+						case 'f':
+							x1 = 5;
+							break;
+						case 'g':
+							x1 = 6;
+							break;
+						case 'h':
+							x1 = 7;
+							break;
+						default:
+							throw new Exception();
+					}
+					switch (origin.charAt(1)) {
+						case '1':
+							y1 = 0;
+							break;
+						case '2':
+							y1 = 1;
+							break;
+						case '3':
+							y1 = 2;
+							break;
+						case '4':
+							y1 = 3;
+							break;
+						case '5':
+							y1 = 4;
+							break;
+						case '6':
+							y1 = 5;
+							break;
+						case '7':
+							y1 = 6;
+							break;
+						case '8':
+							y1 = 7;
+							break;
+						default:
+							throw new Exception();
+					}
+					switch (destination.charAt(0)) {
+						case 'a':
+							x2 = 0;
+							break;
+						case 'b':
+							x2 = 1;
+							break;
+						case 'c':
+							x2 = 2;
+							break;
+						case 'd':
+							x2 = 3;
+							break;
+						case 'e':
+							x2 = 4;
+							break;
+						case 'f':
+							x2 = 5;
+							break;
+						case 'g':
+							x2 = 6;
+							break;
+						case 'h':
+							x2 = 7;
+							break;
+						default:
+							throw new Exception();
+					}
+					switch (destination.charAt(1)) {
+						case '1':
+							y2 = 0;
+							break;
+						case '2':
+							y2 = 1;
+							break;
+						case '3':
+							y2 = 2;
+							break;
+						case '4':
+							y2 = 3;
+							break;
+						case '5':
+							y2 = 4;
+							break;
+						case '6':
+							y2 = 5;
+							break;
+						case '7':
+							y2 = 6;
+							break;
+						case '8':
+							y2 = 7;
+							break;
+						default:
+							throw new Exception();
+					}
+					lblCanMove.setText("");
+					board.move(x1, y1, x2, y2);
+					for (int i=0; i<8; i++)
+						for (int j=0; j<8; j++)
+							if (board.board[i][j].isOccupied()) {
+								if (board.board[i][j].getPiece().isWhite()) {
+									switch (board.board[i][j].getPiece().type()) {
+										case PAWN: squareIcon[i][j].setIcon(whitePawnIcon);
+										break;
+										
+										case KNIGHT: squareIcon[i][j].setIcon(whiteKnightIcon);
+										break;
+										
+										case BISHOP: squareIcon[i][j].setIcon(whiteBishopIcon);
+										break;
+										
+										case ROOK: squareIcon[i][j].setIcon(whiteRookIcon);
+										break;
+										
+										case QUEEN: squareIcon[i][j].setIcon(whiteQueenIcon);
+										break;
+										
+										case KING: squareIcon[i][j].setIcon(whiteKingIcon);
+										break;
+									}
+								} else {
+									switch (board.board[i][j].getPiece().type()) {
+										case PAWN: squareIcon[i][j].setIcon(blackPawnIcon);
+										break;
+										
+										case KNIGHT: squareIcon[i][j].setIcon(blackKnightIcon);
+										break;
+										
+										case BISHOP: squareIcon[i][j].setIcon(blackBishopIcon);
+										break;
+										
+										case ROOK: squareIcon[i][j].setIcon(blackRookIcon);
+										break;
+										
+										case QUEEN: squareIcon[i][j].setIcon(blackQueenIcon);
+										break;
+										
+										case KING: squareIcon[i][j].setIcon(blackKingIcon);
+										break;
+									}
+								}
+							} else {
+								squareIcon[i][j].setIcon(null);
+							}
+					for (int i=0; i<8; i++) {
+						for (int j=0; j<8; j++) {
+							squareIcon[i][j].setBounds(225 + (71*i), 632 - (71*j),50,50);
+							frame.getContentPane().add(squareIcon[i][j]);
+						}
+					}
+					frame.getContentPane().add(boardImg);
+					frame.repaint();
+				}
+				catch (Exception e) {
+					lblCanMove.setText("Invalid entry");
+				}
+			}
+		});
 		frame.getContentPane().add(btnSubmitMove);
+		
+		JLabel lblOriginSquare = new JLabel("Origin Square");
+		lblOriginSquare.setBounds(821, 330, 101, 14);
+		frame.getContentPane().add(lblOriginSquare);
+		
+		JLabel lblDestinationSquare = new JLabel("Destination Square");
+		lblDestinationSquare.setBounds(818, 392, 91, 14);
+		frame.getContentPane().add(lblDestinationSquare);
 	}
 }

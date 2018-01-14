@@ -16,6 +16,10 @@ public class Piece {
 		 isTaken = false;
 	}
 	
+	public void setMoved() {
+		hasMoved = true;
+	}
+	
 	public boolean hasMoved(){
 		return hasMoved;
 	}

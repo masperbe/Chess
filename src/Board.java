@@ -52,6 +52,46 @@ public class Board {
 	}
 	
 	public void move(int x1, int y1, int x2, int y2){
-		//TODO this entire thing
+		Piece movedPiece;
+		boolean destinationOccupied = board[x2][y2].isOccupied();
+		
+		//Check if the origin square is empty
+		if (board[x1][y1].isOccupied())
+			movedPiece = board[x1][y1].getPiece();
+		else
+			return; //TO-DO throw an exception here (original square empty)
+		
+		//Check if the piece is trying to capture a friendly piece
+		if (destinationOccupied)
+			if (movedPiece.isWhite() == board[x2][y2].getPiece().isWhite())
+				return; //TO-DO throw an exception here (capturing own piece)
+		
+		//Check the color and type of the piece to see if the move is legal
+		if (movedPiece.isWhite()) {
+			if (movedPiece.type() == Piece.TypePiece.PAWN) {
+				if (destinationOccupied) {
+					if (Math.abs(x1-x2) == 1) {
+						if (y2-y1 == 1) {
+							board[x1][y1].setPiece(null);
+							movedPiece.setMoved();
+							board[x2][y2].setPiece(movedPiece);
+						}
+						else return; //TO-DO throw an exception here (invalid destination square)
+					}
+					else return; //TO-DO throw an exception here (invalid destination square)
+				}
+				else if (x1 == x2) {
+					if (y2-y1 == 1 || ((y2-y1 == 2) && (movedPiece.hasMoved() == false))) {
+						board[x1][y1].setPiece(null);
+						movedPiece.setMoved();
+						board[x2][y2].setPiece(movedPiece);
+					}
+					else return; //TO-DO throw an exception here (invalid destination square)
+				} else return; //TO-DO throw an exception here (invalid destination square)
+			}
+			// else stuff if it's not a pawn
+		}
+		// else stuff if it's not white
+		
 	}
 }

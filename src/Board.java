@@ -14,6 +14,7 @@ public class Board {
 	}
 	
 	public void newGame(){
+		whiteMove = true;
 		board[0][0].setPiece(new Piece (true, Piece.TypePiece.ROOK));
 		board[1][0].setPiece(new Piece (true, Piece.TypePiece.KNIGHT));
 		board[2][0].setPiece(new Piece (true, Piece.TypePiece.BISHOP));
@@ -67,13 +68,14 @@ public class Board {
 				return; //TO-DO throw an exception here (capturing own piece)
 		
 		//Check the color and type of the piece to see if the move is legal
-		if (movedPiece.isWhite()) {
+		if (movedPiece.isWhite() && whiteMove == true) {
 			if (movedPiece.type() == Piece.TypePiece.PAWN) {
 				if (destinationOccupied) {
 					if (Math.abs(x1-x2) == 1) {
 						if (y2-y1 == 1) {
 							board[x1][y1].setPiece(null);
 							movedPiece.setMoved();
+							whiteMove = false;
 							board[x2][y2].setPiece(movedPiece);
 						}
 						else return; //TO-DO throw an exception here (invalid destination square)
@@ -84,12 +86,39 @@ public class Board {
 					if (y2-y1 == 1 || ((y2-y1 == 2) && (movedPiece.hasMoved() == false))) {
 						board[x1][y1].setPiece(null);
 						movedPiece.setMoved();
+						whiteMove = false;
 						board[x2][y2].setPiece(movedPiece);
 					}
 					else return; //TO-DO throw an exception here (invalid destination square)
 				} else return; //TO-DO throw an exception here (invalid destination square)
 			}
 			// else stuff if it's not a pawn
+		}
+		else if(movedPiece.isWhite() == false && whiteMove == false){
+			if (movedPiece.type() == Piece.TypePiece.PAWN) {
+				if(destinationOccupied) {
+					if(Math.abs(x1-x2) == 1) {
+						if(y1-y2 == 1){
+							board[x1][y1].setPiece(null);
+							movedPiece.setMoved();
+							whiteMove = true;
+							board[x2][y2].setPiece(movedPiece);
+						}
+						else return;
+					}
+					else return;
+				}
+				else if (x1 == x2){
+					if(y1-y2 == 1 || ((y1-y2 == 2)&& (movedPiece.hasMoved() == false))) {
+						board[x1][y1].setPiece(null);
+						movedPiece.setMoved();
+						whiteMove = true;
+						board[x2][y2].setPiece(movedPiece);
+					}
+					else return;
+				}
+				else return;
+			}
 		}
 		// else stuff if it's not white
 		

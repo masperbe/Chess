@@ -435,44 +435,44 @@ public class ChessUI {
 		lblH.setBounds(742, 715, 28, 16);
 		frame.getContentPane().add(lblH);
 		
-		JLabel lbl1 = new JLabel("1");
-		lbl1.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 24));
-		lbl1.setBounds(796, 155, 20, 16);
-		frame.getContentPane().add(lbl1);
-		
-		JLabel lbl2 = new JLabel("2");
-		lbl2.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 24));
-		lbl2.setBounds(796, 226, 20, 16);
-		frame.getContentPane().add(lbl2);
-		
-		JLabel lbl3 = new JLabel("3");
-		lbl3.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 24));
-		lbl3.setBounds(796, 297, 20, 16);
-		frame.getContentPane().add(lbl3);
-		
-		JLabel lbl4 = new JLabel("4");
-		lbl4.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 24));
-		lbl4.setBounds(796, 368, 20, 16);
-		frame.getContentPane().add(lbl4);
-		
-		JLabel lbl5 = new JLabel("5");
-		lbl5.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 24));
-		lbl5.setBounds(796, 439, 20, 16);
-		frame.getContentPane().add(lbl5);
-		
-		JLabel lbl6 = new JLabel("6");
-		lbl6.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 24));
-		lbl6.setBounds(796, 510, 20, 16);
-		frame.getContentPane().add(lbl6);
+		JLabel lbl8 = new JLabel("8");
+		lbl8.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 24));
+		lbl8.setBounds(796, 155, 20, 16);
+		frame.getContentPane().add(lbl8);
 		
 		JLabel lbl7 = new JLabel("7");
 		lbl7.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 24));
-		lbl7.setBounds(796, 581, 20, 16);
+		lbl7.setBounds(796, 226, 20, 16);
 		frame.getContentPane().add(lbl7);
 		
-		JLabel lbl8 = new JLabel("8");
-		lbl8.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 24));
-		lbl8.setBounds(796, 652, 20, 16);
-		frame.getContentPane().add(lbl8);
+		JLabel lbl6 = new JLabel("6");
+		lbl6.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 24));
+		lbl6.setBounds(796, 297, 20, 16);
+		frame.getContentPane().add(lbl6);
+		
+		JLabel lbl5 = new JLabel("5");
+		lbl5.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 24));
+		lbl5.setBounds(796, 368, 20, 16);
+		frame.getContentPane().add(lbl5);
+		
+		JLabel lbl4 = new JLabel("4");
+		lbl4.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 24));
+		lbl4.setBounds(796, 439, 20, 16);
+		frame.getContentPane().add(lbl4);
+		
+		JLabel lbl3 = new JLabel("3");
+		lbl3.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 24));
+		lbl3.setBounds(796, 510, 20, 16);
+		frame.getContentPane().add(lbl3);
+		
+		JLabel lbl2 = new JLabel("2");
+		lbl2.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 24));
+		lbl2.setBounds(796, 581, 20, 16);
+		frame.getContentPane().add(lbl2);
+		
+		JLabel lbl1 = new JLabel("1");
+		lbl1.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 24));
+		lbl1.setBounds(796, 652, 20, 16);
+		frame.getContentPane().add(lbl1);
 	}
 }

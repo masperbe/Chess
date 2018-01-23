@@ -28,6 +28,12 @@ public class Board {
 		for (int i=0; i<8; i++)
 			board[i][1].setPiece(new Piece (true, Piece.TypePiece.PAWN));
 		
+		for(int j=2; j<5;j++){
+			for (int i=0; i<8; i++){
+				board[i][j].setPiece(null);
+			}
+		}
+		//TODO URGENT Get not only the board to recognize there is not a piece on a board but there should also not be an image of the piece
 		for (int i=0; i<8; i++)
 			board[i][6].setPiece(new Piece (false, Piece.TypePiece.PAWN));
 		
@@ -152,6 +158,87 @@ public class Board {
 				}
 				else return;
 			}
+			else if (movedPiece.type() == Piece.TypePiece.ROOK){
+				int allFree = 0;
+				if(x1-x2 != 0 || y1-y2 != 0){//delete later but it was giving me an error on the brackets and i was too lazy to figure it out
+					
+				}
+				if(y1-y2 == 0){
+					if(x1-x2 > 0){
+			
+						for(int i = x1-x2;i>1;i--){
+							
+							if(board[x2-1+i][y2].isOccupied()){
+								allFree++;
+							}
+							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
+								return;
+							}
+						}
+						if(allFree == 0){
+							board[x1][y1].setPiece(null);
+							movedPiece.setMoved();
+							whiteMove = false;
+							board[x2][y2].setPiece(movedPiece);	
+						}
+					}
+					else if(x2-x1 > 0){
+						for(int i = x2-x1;i>1;i--){
+							if(board[x1+i-1][y2].isOccupied()){
+								allFree++;
+							}
+							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
+								return;
+							}
+						}
+						if(allFree == 0){
+							board[x1][y1].setPiece(null);
+							movedPiece.setMoved();
+							whiteMove = false;
+							board[x2][y2].setPiece(movedPiece);	
+						}
+					}
+					
+				}
+				if(x1-x2 == 0){
+					if(y1-y2 > 0){
+						
+						for(int i = y1-y2;i>1;i--){
+							
+							if(board[x2][y1-i+1].isOccupied()){
+								allFree++;
+							}
+							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
+								return;
+							}
+						}
+						if(allFree == 0){
+							board[x1][y1].setPiece(null);
+							movedPiece.setMoved();
+							whiteMove = false;
+							board[x2][y2].setPiece(movedPiece);	
+						}
+					}
+					else if(y2-y1 > 0){
+						for(int i = y2-y1;i>1;i--){
+							if(board[x2][y2-i+1].isOccupied()){
+								allFree++;
+							}
+							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
+								return;
+							}
+						}
+						if(allFree == 0){
+							board[x1][y1].setPiece(null);
+							movedPiece.setMoved();
+							whiteMove = false;
+							board[x2][y2].setPiece(movedPiece);	
+						}
+					}
+					
+				}
+			}
+			
 			// else stuff if it's not a pawn
 		}
 		else if(movedPiece.isWhite() == false && whiteMove == false){
@@ -237,6 +324,86 @@ public class Board {
 					}
 				}
 				else return;
+			}
+			else if (movedPiece.type() == Piece.TypePiece.ROOK){
+				int allFree = 0;
+				if(x1-x2 != 0 || y1-y2 != 0){//delete later but it was giving me an error on the brackets and i was too lazy to figure it out
+					
+				}
+				if(y1-y2 == 0){
+					if(x1-x2 > 0){
+			
+						for(int i = x1-x2;i>1;i--){
+							
+							if(board[x2-1+i][y2].isOccupied()){
+								allFree++;
+							}
+							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == false){
+								return;
+							}
+						}
+						if(allFree == 0){
+							board[x1][y1].setPiece(null);
+							movedPiece.setMoved();
+							whiteMove = true;
+							board[x2][y2].setPiece(movedPiece);	
+						}
+					}
+					else if(x2-x1 > 0){
+						for(int i = x2-x1;i>1;i--){
+							if(board[x1+i-1][y2].isOccupied()){
+								allFree++;
+							}
+							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == false){
+								return;
+							}
+						}
+						if(allFree == 0){
+							board[x1][y1].setPiece(null);
+							movedPiece.setMoved();
+							whiteMove = true;
+							board[x2][y2].setPiece(movedPiece);	
+						}
+					}
+					
+				}
+				if(x1-x2 == 0){
+					if(y1-y2 > 0){
+						
+						for(int i = y1-y2;i>1;i--){
+							
+							if(board[x2][y1-i+1].isOccupied()){
+								allFree++;
+							}
+							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == false){
+								return;
+							}
+						}
+						if(allFree == 0){
+							board[x1][y1].setPiece(null);
+							movedPiece.setMoved();
+							whiteMove = true;
+							board[x2][y2].setPiece(movedPiece);	
+						}
+					}
+					else if(y2-y1 > 0){
+						for(int i = y2-y1;i>1;i--){
+							if(board[x2][y2-i+1].isOccupied()){
+								allFree++;
+							}
+							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == false){
+								return;
+							}
+						}
+						if(allFree == 0){
+							board[x1][y1].setPiece(null);
+							movedPiece.setMoved();
+							whiteMove = true;
+							board[x2][y2].setPiece(movedPiece);	
+						}
+					}
+					
+				}
 			}
 			
 			

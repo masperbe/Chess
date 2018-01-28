@@ -159,9 +159,7 @@ public class Board {
 				else return;
 			}
 			else if (movedPiece.type() == Piece.TypePiece.ROOK){
-				if(x1-x2 != 0 || y1-y2 != 0){//delete later but it was giving me an error on the brackets and i was too lazy to figure it out
-					
-				}
+				
 				if(y1-y2 == 0){
 					if(x1-x2 > 0){
 			
@@ -431,6 +429,15 @@ public class Board {
 					}
 					
 				}
+			}
+			else if(movedPiece.type() == Piece.TypePiece.KING){
+				if(Math.abs(x2-x1) == 1 || Math.abs(y2-y1) == 1){
+					board[x1][y1].setPiece(null);
+					movedPiece.setMoved();
+					whiteMove = false;
+					board[x2][y2].setPiece(movedPiece);	
+				}
+				else return;
 			}
 			
 			// else stuff if it's not a pawn
@@ -520,9 +527,7 @@ public class Board {
 				else return;
 			}
 			else if (movedPiece.type() == Piece.TypePiece.ROOK){
-				if(x1-x2 != 0 || y1-y2 != 0){//delete later but it was giving me an error on the brackets and i was too lazy to figure it out
-					
-				}
+				
 				if(y1-y2 == 0){
 					if(x1-x2 > 0){
 			
@@ -793,6 +798,15 @@ public class Board {
 					}
 					
 				}
+			}
+			else if(movedPiece.type() == Piece.TypePiece.KING){
+				if(Math.abs(x2-x1) == 1 || Math.abs(y2-y1) == 1){
+					board[x1][y1].setPiece(null);
+					movedPiece.setMoved();
+					whiteMove = true;
+					board[x2][y2].setPiece(movedPiece);	
+				}
+				else return;
 			}
 			
 			

@@ -1,16 +1,18 @@
 
 public class Board {
 	
-	public Square[][] board = new Square[8][8];
+	public Square[][] board;
 		
 	private int moveNumber;
 	private boolean whiteMove;
 	private boolean gameInProgress;
 	
 	public Board() {
+		board = new Square[8][8];
 		for (int i=0; i<8; i++)
 			for (int j=0; j<8; j++)
 				board[i][j] = new Square();
+		newGame();
 	}
 	
 	public void newGame(){
@@ -53,6 +55,13 @@ public class Board {
 		return moveNumber;
 	}
 	
+	private void executeMove(int x1, int y1, int x2, int y2, Piece movedPiece, boolean whiteMove) {
+		board[x1][y1].setPiece(null);
+		movedPiece.setMoved();
+		this.whiteMove = whiteMove;
+		board[x2][y2].setPiece(movedPiece);
+	}
+	
 	public void move(int x1, int y1, int x2, int y2){
 		Piece movedPiece;
 		boolean destinationOccupied = board[x2][y2].isOccupied();
@@ -62,6 +71,7 @@ public class Board {
 			movedPiece = board[x1][y1].getPiece();
 		else
 			return; //TO-DO throw an exception here (original square empty)
+			// throw new IllegalMoveException(); <- requires writing a class called IllegalMoveException
 		
 		//Check if the piece is trying to capture a friendly piece
 		if (destinationOccupied)
@@ -74,10 +84,7 @@ public class Board {
 				if (destinationOccupied) {
 					if (Math.abs(x1-x2) == 1) {
 						if (y2-y1 == 1) {
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = false;
-							board[x2][y2].setPiece(movedPiece);
+							executeMove(x1,y1,x2,y2,movedPiece,false);
 						}
 						else return; //TO-DO throw an exception here (invalid destination square)
 					}
@@ -85,10 +92,7 @@ public class Board {
 				}
 				else if (x1 == x2) {
 					if (y2-y1 == 1 || ((y2-y1 == 2) && (movedPiece.hasMoved() == false))) {
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 					else return; //TO-DO throw an exception here (invalid destination square)
 				} else return; //TO-DO throw an exception here (invalid destination square)
@@ -96,58 +100,34 @@ public class Board {
 			else if (movedPiece.type() == Piece.TypePiece.KNIGHT){
 				if (x1-x2 == 1){
 					if(y2-y1 == 2){
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 					else if (y1-y2 == 2){
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 				}
 				else if (x1-x2 == 2){
 					if(y2-y1 == 1){
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 					else if (y1-y2 == 1){
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 				}
 				else if (x2-x1 == 1){
 					if(y2-y1 == 2){
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 					else if (y1-y2 == 2){
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 				}
 				else if (x2-x1 == 2){
 					if(y2-y1 == 1){
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 					else if (y1-y2 == 1){
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 				}
 				else return;
@@ -166,12 +146,7 @@ public class Board {
 								return;
 							}
 						}
-						
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = false;
-							board[x2][y2].setPiece(movedPiece);	
-						
+							executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 					else if(x2-x1 > 0){
 						for(int i = x2-x1;i>1;i--){
@@ -182,14 +157,8 @@ public class Board {
 								return;
 							}
 						}
-				
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = false;
-							board[x2][y2].setPiece(movedPiece);	
-						
-					}
-					
+							executeMove(x1,y1,x2,y2,movedPiece,false);
+					}	
 				}
 				if(x1-x2 == 0){
 					if(y1-y2 > 0){
@@ -203,12 +172,7 @@ public class Board {
 								return;
 							}
 						}
-						
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = false;
-							board[x2][y2].setPiece(movedPiece);	
-						
+							executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 					else if(y2-y1 > 0){
 						for(int i = y2-y1;i>1;i--){
@@ -219,14 +183,8 @@ public class Board {
 								return;
 							}
 						}
-						
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = false;
-							board[x2][y2].setPiece(movedPiece);	
-						
+							executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
-					
 				}
 			}
 			else if (movedPiece.type() == Piece.TypePiece.BISHOP){
@@ -240,10 +198,7 @@ public class Board {
 								return;
 							}
 						}
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);	
+						executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 					else if(x2-x1 > 0 && y2-y1 > 0){//top right
 						for(int i = y2-y1;i>1;i--){
@@ -254,10 +209,7 @@ public class Board {
 								return;
 							}
 						}
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);	
+						executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 					else if(x2-x1 > 0 && y1-y2 > 0){//bottom right
 						for(int i = x2-x1;i>1;i--){
@@ -268,10 +220,7 @@ public class Board {
 								return;
 							}
 						}
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);	
+						executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 					else if(x1-x2 > 0 && y2-y1 > 0){//top left
 						for(int i = y2-y1;i>1;i--){
@@ -282,10 +231,7 @@ public class Board {
 								return;
 							}
 						}
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);	
+						executeMove(x1,y1,x2,y2,movedPiece,false);	
 					}
 				}
 				else return;
@@ -301,10 +247,7 @@ public class Board {
 								return;
 							}
 						}
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);	
+						executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 					else if(x2-x1 > 0 && y2-y1 > 0){//top right
 						for(int i = y2-y1;i>1;i--){
@@ -315,10 +258,7 @@ public class Board {
 								return;
 							}
 						}
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);	
+						executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 					else if(x2-x1 > 0 && y1-y2 > 0){//bottom right
 						for(int i = x2-x1;i>1;i--){
@@ -329,10 +269,7 @@ public class Board {
 								return;
 							}
 						}
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);	
+						executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 					else if(x1-x2 > 0 && y2-y1 > 0){//top left
 						for(int i = y2-y1;i>1;i--){
@@ -343,10 +280,7 @@ public class Board {
 								return;
 							}
 						}
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = false;
-						board[x2][y2].setPiece(movedPiece);	
+						executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 				}
 				if(y1-y2 == 0){
@@ -361,12 +295,7 @@ public class Board {
 								return;
 							}
 						}
-						
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = false;
-							board[x2][y2].setPiece(movedPiece);	
-						
+							executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 					else if(x2-x1 > 0){
 						for(int i = x2-x1;i>1;i--){
@@ -377,14 +306,8 @@ public class Board {
 								return;
 							}
 						}
-				
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = false;
-							board[x2][y2].setPiece(movedPiece);	
-						
+							executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
-					
 				}
 				if(x1-x2 == 0){
 					if(y1-y2 > 0){
@@ -398,12 +321,7 @@ public class Board {
 								return;
 							}
 						}
-						
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = false;
-							board[x2][y2].setPiece(movedPiece);	
-						
+							executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
 					else if(y2-y1 > 0){
 						for(int i = y2-y1;i>1;i--){
@@ -414,37 +332,24 @@ public class Board {
 								return;
 							}
 						}
-						
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = false;
-							board[x2][y2].setPiece(movedPiece);	
-						
+							executeMove(x1,y1,x2,y2,movedPiece,false);
 					}
-					
 				}
 			}
 			else if(movedPiece.type() == Piece.TypePiece.KING){
 				if(Math.abs(x2-x1) == 1 || Math.abs(y2-y1) == 1){
-					board[x1][y1].setPiece(null);
-					movedPiece.setMoved();
-					whiteMove = false;
-					board[x2][y2].setPiece(movedPiece);	
+					executeMove(x1,y1,x2,y2,movedPiece,false);
 				}
 				else return;
 			}
 			
-			// else stuff if it's not a pawn
 		}
 		else if(movedPiece.isWhite() == false && whiteMove == false){
 			if (movedPiece.type() == Piece.TypePiece.PAWN) {
 				if(destinationOccupied) {
 					if(Math.abs(x1-x2) == 1) {
 						if(y1-y2 == 1){
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = true;
-							board[x2][y2].setPiece(movedPiece);
+							executeMove(x1,y1,x2,y2,movedPiece,true);
 						}
 						else return;
 					}
@@ -452,10 +357,7 @@ public class Board {
 				}
 				else if (x1 == x2){
 					if(y1-y2 == 1 || ((y1-y2 == 2)&& (movedPiece.hasMoved() == false))) {
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 					else return;
 				}
@@ -464,58 +366,34 @@ public class Board {
 			else if (movedPiece.type() == Piece.TypePiece.KNIGHT){
 				if (x1-x2 == 1){
 					if(y2-y1 == 2){
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 					else if (y1-y2 == 2){
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 				}
 				else if (x1-x2 == 2){
 					if(y2-y1 == 1){
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 					else if (y1-y2 == 1){
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 				}
 				else if (x2-x1 == 1){
 					if(y2-y1 == 2){
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 					else if (y1-y2 == 2){
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 				}
 				else if (x2-x1 == 2){
 					if(y2-y1 == 1){
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 					else if (y1-y2 == 1){
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 				}
 				else return;
@@ -534,12 +412,7 @@ public class Board {
 								return;
 							}
 						}
-						
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = true;
-							board[x2][y2].setPiece(movedPiece);	
-						
+							executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 					else if(x2-x1 > 0){
 						for(int i = x2-x1;i>1;i--){
@@ -550,14 +423,8 @@ public class Board {
 								return;
 							}
 						}
-						
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = true;
-							board[x2][y2].setPiece(movedPiece);	
-						
-					}
-					
+							executeMove(x1,y1,x2,y2,movedPiece,true);
+					}		
 				}
 				if(x1-x2 == 0){
 					if(y1-y2 > 0){
@@ -571,12 +438,7 @@ public class Board {
 								return;
 							}
 						}
-						
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = true;
-							board[x2][y2].setPiece(movedPiece);	
-						
+							executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 					else if(y2-y1 > 0){
 						for(int i = y2-y1;i>1;i--){
@@ -587,14 +449,8 @@ public class Board {
 								return;
 							}
 						}
-						
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = true;
-							board[x2][y2].setPiece(movedPiece);	
-						
+							executeMove(x1,y1,x2,y2,movedPiece,true);	
 					}
-					
 				}
 			}
 			else if (movedPiece.type() == Piece.TypePiece.BISHOP){
@@ -608,10 +464,7 @@ public class Board {
 								return;
 							}
 						}
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);	
+						executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 					else if(x2-x1 > 0 && y2-y1 > 0){//top right
 						for(int i = y2-y1;i>1;i--){
@@ -622,10 +475,7 @@ public class Board {
 								return;
 							}
 						}
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);	
+						executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 					else if(x2-x1 > 0 && y1-y2 > 0){//bottom right
 						for(int i = x2-x1;i>1;i--){
@@ -636,10 +486,7 @@ public class Board {
 								return;
 							}
 						}
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);	
+						executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 					else if(x1-x2 > 0 && y2-y1 > 0){//top left
 						for(int i = y2-y1;i>1;i--){
@@ -650,10 +497,7 @@ public class Board {
 								return;
 							}
 						}
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);	
+						executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 				}
 				else return;
@@ -669,10 +513,7 @@ public class Board {
 								return;
 							}
 						}
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);	
+						executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 					else if(x2-x1 > 0 && y2-y1 > 0){//top right
 						for(int i = y2-y1;i>1;i--){
@@ -683,10 +524,7 @@ public class Board {
 								return;
 							}
 						}
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);	
+						executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 					else if(x2-x1 > 0 && y1-y2 > 0){//bottom right
 						for(int i = x2-x1;i>1;i--){
@@ -697,10 +535,7 @@ public class Board {
 								return;
 							}
 						}
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);	
+						executeMove(x1,y1,x2,y2,movedPiece,true);	
 					}
 					else if(x1-x2 > 0 && y2-y1 > 0){//top left
 						for(int i = y2-y1;i>1;i--){
@@ -711,10 +546,7 @@ public class Board {
 								return;
 							}
 						}
-						board[x1][y1].setPiece(null);
-						movedPiece.setMoved();
-						whiteMove = true;
-						board[x2][y2].setPiece(movedPiece);	
+						executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 				}
 				
@@ -729,13 +561,8 @@ public class Board {
 							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == false){
 								return;
 							}
-						}
-						
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = true;
-							board[x2][y2].setPiece(movedPiece);	
-						
+						}						
+							executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
 					else if(x2-x1 > 0){
 						for(int i = x2-x1;i>1;i--){
@@ -746,14 +573,8 @@ public class Board {
 								return;
 							}
 						}
-				
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = true;
-							board[x2][y2].setPiece(movedPiece);	
-						
-					}
-					
+							executeMove(x1,y1,x2,y2,movedPiece,true);	
+					}	
 				}
 				if(x1-x2 == 0){
 					if(y1-y2 > 0){
@@ -767,12 +588,7 @@ public class Board {
 								return;
 							}
 						}
-						
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = true;
-							board[x2][y2].setPiece(movedPiece);	
-						
+							executeMove(x1,y1,x2,y2,movedPiece,true);	
 					}
 					else if(y2-y1 > 0){
 						for(int i = y2-y1;i>1;i--){
@@ -783,29 +599,16 @@ public class Board {
 								return;
 							}
 						}
-						
-							board[x1][y1].setPiece(null);
-							movedPiece.setMoved();
-							whiteMove = true;
-							board[x2][y2].setPiece(movedPiece);	
-						
+							executeMove(x1,y1,x2,y2,movedPiece,true);
 					}
-					
 				}
 			}
 			else if(movedPiece.type() == Piece.TypePiece.KING){
 				if(Math.abs(x2-x1) == 1 || Math.abs(y2-y1) == 1){
-					board[x1][y1].setPiece(null);
-					movedPiece.setMoved();
-					whiteMove = true;
-					board[x2][y2].setPiece(movedPiece);	
+					executeMove(x1,y1,x2,y2,movedPiece,true);
 				}
 				else return;
-			}
-			
-			
+			}	
 		}
-		// else stuff if it's not white
-		
 	}
 }

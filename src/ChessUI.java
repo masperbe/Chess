@@ -1,5 +1,5 @@
-import java.awt.EventQueue;
 
+import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.GridLayout;
 import java.awt.CardLayout;
@@ -18,7 +18,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
 public class ChessUI {
-
+	
+	Board board;
 	private JFrame frame;
 	private JTextField textFieldOrigin;
 	private JTextField textFieldDestination;
@@ -50,7 +51,6 @@ public class ChessUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		Board board = new Board();
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1200, 800);
@@ -85,7 +85,7 @@ public class ChessUI {
 		btnNewGame.setBounds(216, 0, 568, 115);
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				board.newGame();
+				board = new Board();
 				for (int i=0; i<8; i++)
 					for (int j=0; j<8; j++)
 						if (board.board[i][j].isOccupied()) {
@@ -240,7 +240,7 @@ public class ChessUI {
 							x1 = 7;
 							break;
 						default:
-							throw new Exception();
+							throw new Exception(); // Exception("explanation")
 					}
 					switch (origin.charAt(1)) {
 						case '1':

@@ -88,7 +88,7 @@ public class ChessUI {
 				board.newGame();
 				for (int i=0; i<8; i++)
 					for (int j=0; j<8; j++)
-						if (board.board[i][j].isOccupied())
+						if (board.board[i][j].isOccupied()) {
 							if (board.board[i][j].getPiece().isWhite())
 								switch (board.board[i][j].getPiece().type()) {
 									case PAWN: squareIcon[i][j].setIcon(whitePawnIcon);
@@ -129,6 +129,10 @@ public class ChessUI {
 								case KING: squareIcon[i][j].setIcon(blackKingIcon);
 								break;
 							}
+						}  else {
+							squareIcon[i][j].setIcon(null);
+						}
+							
 				for (int i=0; i<8; i++) {
 					for (int j=0; j<8; j++) {
 						squareIcon[i][j].setBounds(225 + (71*i), 632 - (71*j),50,50);

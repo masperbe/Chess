@@ -28,12 +28,6 @@ public class Board {
 		for (int i=0; i<8; i++)
 			board[i][1].setPiece(new Piece (true, Piece.TypePiece.PAWN));
 		
-		for(int j=2; j<5;j++){
-			for (int i=0; i<8; i++){
-				board[i][j].setPiece(null);
-			}
-		}
-		//TODO URGENT Get not only the board to recognize there is not a piece on a board but there should also not be an image of the piece
 		for (int i=0; i<8; i++)
 			board[i][6].setPiece(new Piece (false, Piece.TypePiece.PAWN));
 		

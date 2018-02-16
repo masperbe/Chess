@@ -54,8 +54,41 @@ public class Board {
 	public int getMoveNumber() {
 		return moveNumber;
 	}
-	
 	private void executeMove(int x1, int y1, int x2, int y2, Piece movedPiece, boolean whiteMove) {
+		int wKingPosX = 0;
+		int wKingPosY = 0;
+		int bKingPosX = 0;
+		int bKingPosY = 0;
+		
+		for (int i=0; i<8; i++) {
+			for (int j=0; j<8; j++) {
+				if(board[i][j].getPiece().type == Piece.TypePiece.KING && board[i][j].getPiece().isWhite() == true){//for the white king
+					wKingPosX = i;
+					wKingPosY = j;
+					
+				}
+				if(board[i][j].getPiece().type == Piece.TypePiece.KING && board[i][j].getPiece().isWhite() == false){//for the black king
+					bKingPosX = i;
+					bKingPosY = j;
+				}
+			}
+		}
+		/*
+		Knight
+		if(board[Math.abs(wKingPosX-1)][Math.abs(wKingPosY-2)].getPiece().type == Piece.TypePiece.KNIGHT && board[Math.abs(wKingPosX-1)][Math.abs(wKingPosY-2)].getPiece().isWhite == false){
+			return;
+		}
+		if(board[Math.abs(wKingPosX-2)][Math.abs(wKingPosY-1)].getPiece().type == Piece.TypePiece.KNIGHT && board[Math.abs(wKingPosX-1)][Math.abs(wKingPosY-2)].getPiece().isWhite == false){
+			return;
+		}
+		if(board[Math.abs(bKingPosX-1)][Math.abs(bKingPosY-2)].getPiece().type == Piece.TypePiece.KNIGHT && board[Math.abs(bKingPosX-1)][Math.abs(bKingPosY-2)].getPiece().isWhite == false){
+			return;
+		}
+		if(board[Math.abs(bKingPosX-2)][Math.abs(bKingPosY-1)].getPiece().type == Piece.TypePiece.KNIGHT && board[Math.abs(bKingPosX-1)][Math.abs(bKingPosY-2)].getPiece().isWhite == false){
+			return;
+		}
+		Knight*/
+		
 		board[x1][y1].setPiece(null);
 		movedPiece.setMoved();
 		this.whiteMove = whiteMove;

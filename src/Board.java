@@ -659,9 +659,16 @@ public class Board {
 				}
 			}
 			else if(movedPiece.type() == Piece.TypePiece.KING){
-				if(Math.abs(x2-x1) == 1 || Math.abs(y2-y1) == 1){
+				if((Math.abs(x2-x1) == 1 && Math.abs(y2-y1) <=  1)|| (Math.abs(y2-y1) == 1 && Math.abs(x2-x1) <=  1)){
 					executeMove(x1,y1,x2,y2,movedPiece);
 				}
+				else if(movedPiece.hasMoved = false && x2-x1 == 2 && board[8][0].getPiece().hasMoved() == false){
+					executeMove(x1,y1,x2,y2,movedPiece);
+					
+					
+					
+				}
+				
 				else return;
 			}
 			

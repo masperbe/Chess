@@ -662,11 +662,29 @@ public class Board {
 				if((Math.abs(x2-x1) == 1 && Math.abs(y2-y1) <=  1)|| (Math.abs(y2-y1) == 1 && Math.abs(x2-x1) <=  1)){
 					executeMove(x1,y1,x2,y2,movedPiece);
 				}
-				else if(movedPiece.hasMoved = false && x2-x1 == 2 && board[8][0].getPiece().hasMoved() == false){
+				else if(movedPiece.hasMoved ==/*I spent about a solid hour not realizing there was just a syntax error. -_-*/ false && x2-x1 == 2 && board[7][0].getPiece().hasMoved() == false && board[5][0].isOccupied() == false){
 					executeMove(x1,y1,x2,y2,movedPiece);
-					
-					
-					
+					movedPiece = board[7][0].getPiece();
+					board[7][0].setPiece(null);
+					board[5][0].setPiece(movedPiece);
+				}
+				else if(movedPiece.hasMoved == false && x1-x2 == 2 && board[0][0].getPiece().hasMoved() == false && board[1][0].isOccupied() == false && board[3][0].isOccupied() == false){
+					executeMove(x1,y1,x2,y2,movedPiece);
+					movedPiece = board[0][0].getPiece();
+					board[0][0].setPiece(null);
+					board[3][0].setPiece(movedPiece);
+				}
+				else if(movedPiece.hasMoved == false && x2-x1 == 2 && board[7][7].getPiece().hasMoved() == false && board[5][7].isOccupied() == false){
+					executeMove(x1,y1,x2,y2,movedPiece);
+					movedPiece = board[7][7].getPiece();
+					board[7][7].setPiece(null);
+					board[5][7].setPiece(movedPiece);
+				}
+				else if(movedPiece.hasMoved == false && x1-x2 == 2 && board[0][7].getPiece().hasMoved() == false && board[1][7].isOccupied() == false && board[3][7].isOccupied() == false){
+					executeMove(x1,y1,x2,y2,movedPiece);
+					movedPiece = board[0][7].getPiece();
+					board[0][7].setPiece(null);
+					board[3][7].setPiece(movedPiece);
 				}
 				
 				else return;

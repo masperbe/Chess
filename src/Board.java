@@ -75,309 +75,174 @@ public class Board {
 			}
 		}
 		
-		int tempWKingX = wKingX;
-		int tempWKingY = wKingY;
-		int tempBKingX = bKingX;
-		int tempBKingY = bKingY;
+		int tempKingX, tempKingY;
+		
+		if (whiteMove) {
+			tempKingX = wKingX;
+			tempKingY = wKingY;
+		} else {
+			tempKingX = bKingX;
+			tempKingY = bKingY;
+		}
 		
 		temp[x1][y1].setPiece(null);
 		movedPiece.setMoved();
 		temp[x2][y2].setPiece(movedPiece);
 		if (movedPiece.type == Piece.TypePiece.KING) {
-			if (movedPiece.isWhite()) {
-				tempWKingX = x2;
-				tempWKingY = y2;
-			} else {
-				tempBKingX = x2;
-				tempBKingY = y2;
+			tempKingX = x2;
+			tempKingY = y2;
+		}
+		
+		//to the right
+		int i = 1;
+		int j;
+		while(tempKingX+i < 8 && temp[tempKingX+i][tempKingY].isOccupied() == false){
+			i++;
+		}
+		if(tempKingX+i < 8 && temp[tempKingX+i][tempKingY].getPiece().isWhite != whiteMove){
+			Piece.TypePiece type = temp[tempKingX+i][tempKingY].getPiece().type();
+			if(type == Piece.TypePiece.ROOK || (type == Piece.TypePiece.KING && i==1) || type == Piece.TypePiece.QUEEN){
+				return false;
 			}
 		}
 		
-		if(whiteMove){//white to move - is white in check?
-			//to the right
-			int i = 1;
-			int j;
-			while(tempWKingX+i < 8 && temp[tempWKingX+i][tempWKingY].isOccupied() == false){
-				i++;
+		//to the left
+		i = -1;
+		while(tempKingX+i > 0 && temp[tempKingX+i][tempKingY].isOccupied() == false){
+			i--;
+		}
+		if(tempKingX+i > 0 && temp[tempKingX+i][tempKingY].getPiece().isWhite != whiteMove){
+			Piece.TypePiece type = temp[tempKingX+i][tempKingY].getPiece().type();
+			if(type == Piece.TypePiece.ROOK || (type == Piece.TypePiece.KING && i==-1) || type == Piece.TypePiece.QUEEN){
+				return false;
 			}
-			if(tempWKingX+i < 8 && temp[tempWKingX+i][tempWKingY].getPiece().isWhite == false){
-				Piece.TypePiece type = temp[tempWKingX+i][tempWKingY].getPiece().type();
-				if(type == Piece.TypePiece.ROOK || (type == Piece.TypePiece.KING && i==1) || type == Piece.TypePiece.QUEEN){
-					return false;
-				}
-			}
-			
-			//to the left
-			i = -1;
-			while(tempWKingX+i > 0 && temp[tempWKingX+i][tempWKingY].isOccupied() == false){
-				i--;
-			}
-			if(tempWKingX+i > 0 && temp[tempWKingX+i][tempWKingY].getPiece().isWhite == false){
-				Piece.TypePiece type = temp[tempWKingX+i][tempWKingY].getPiece().type();
-				if(type == Piece.TypePiece.ROOK || (type == Piece.TypePiece.KING && i==-1) || type == Piece.TypePiece.QUEEN){
-					return false;
-				}
-			}
-			
-			//to the up
-			j = 1;
-			while(tempWKingY+j < 8 && temp[tempWKingX][tempWKingY+j].isOccupied() == false){
-				j++;
-			}
-			if(tempWKingY+j < 8 && temp[tempWKingX][tempWKingY+j].getPiece().isWhite == false){
-				Piece.TypePiece type = temp[tempWKingX][tempWKingY+j].getPiece().type();
-				if(type == Piece.TypePiece.ROOK || (type == Piece.TypePiece.KING && j==1) || type == Piece.TypePiece.QUEEN){
-					return false;
-				}
-			}
-			
-			//to the down
-			j = -1;
-			while(tempWKingY+j > 0 && temp[tempWKingX][tempWKingY+j].isOccupied() == false){
-				j--;
-			}
-			if(tempWKingY+j > 0 && temp[tempWKingX][tempWKingY+j].getPiece().isWhite == false){
-				Piece.TypePiece type = temp[tempWKingX][tempWKingY+j].getPiece().type();
-				if(type == Piece.TypePiece.ROOK || (type == Piece.TypePiece.KING && j==-1) || type == Piece.TypePiece.QUEEN){
-					return false;
-				}
-			}
-			
-			//to the top right
-			i = 1;
-			j = 1;
-			while(tempWKingX+i < 8 && tempWKingY+j < 8 && temp[tempWKingX+i][tempWKingY+j].isOccupied() == false){
-				i++;
-				j++;
-			}
-			if(tempWKingX+i < 8 && tempWKingY+j < 8 && temp[tempWKingX+i][tempWKingY+j].getPiece().isWhite == false){
-				Piece.TypePiece type = temp[tempWKingX+i][tempWKingY+j].getPiece().type();
-				if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && j==1) || type == Piece.TypePiece.QUEEN || (type == Piece.TypePiece.PAWN && j==1)){
-					return false;
-				}
-			}
-			
-			//to the bottom right
-			i = 1;
-			j = -1;
-			while(tempWKingX+i < 8 && tempWKingY+j > 0 && temp[tempWKingX+i][tempWKingY+j].isOccupied() == false){
-				i++;
-				j--;
-			}
-			if(tempWKingX+i < 8 && tempWKingY+j > 0 && temp[tempWKingX+i][tempWKingY+j].getPiece().isWhite == false){
-				Piece.TypePiece type = temp[tempWKingX+i][tempWKingY+j].getPiece().type();
-				if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && i==1) || type == Piece.TypePiece.QUEEN){
-					return false;
-				}
-			}
-			
-			//to the bottom left
-			i = -1;
-			j = -1;
-			while(tempWKingX+i > 0 && tempWKingY+j > 0 && temp[tempWKingX+i][tempWKingY+j].isOccupied() == false){
-				i--;
-				j--;
-			}
-			if(tempWKingX+i > 0 && tempWKingY+j > 0 && temp[tempWKingX+i][tempWKingY+j].getPiece().isWhite == false){
-				Piece.TypePiece type = temp[tempWKingX+i][tempWKingY+j].getPiece().type();
-				if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && j==-1) || type == Piece.TypePiece.QUEEN){
-					return false;
-				}
-			}
-			
-			//to the top left
-			i = -1;
-			j = 1;
-			while(tempWKingX+i > 0 && tempWKingY+j < 8 && temp[tempWKingX+i][tempWKingY+j].isOccupied() == false){
-				i--;
-				j++;
-			}
-			if(tempWKingX+i > 0 && tempWKingY+j < 8 && temp[tempWKingX+i][tempWKingY+j].getPiece().isWhite == false){
-				Piece.TypePiece type = temp[tempWKingX+i][tempWKingY+j].getPiece().type();
-				if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && j==1) || type == Piece.TypePiece.QUEEN || (type == Piece.TypePiece.PAWN && j==1)){
-					return false;
-				}
-			}
-			if(tempWKingX + 1 < 8 && tempWKingY + 2 < 8)
-				if(temp[tempWKingX + 1][tempWKingY +2].isOccupied() && temp[tempWKingX + 1][tempWKingY + 2].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempWKingX + 1][tempWKingY +2].getPiece().isWhite == false){
-					return false;
-				}
-			if(tempWKingX + 1 < 8 && tempWKingY - 2 > 0)
-				if(temp[tempWKingX + 1][tempWKingY - 2].isOccupied() && temp[tempWKingX + 1][tempWKingY - 2].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempWKingX + 1][tempWKingY - 2].getPiece().isWhite == false){
-					return false;
-				}
-			if(tempWKingX - 1 > 0 && tempWKingY + 2 < 8)
-				if(temp[tempWKingX - 1][tempWKingY + 2].isOccupied() && temp[tempWKingX - 1][tempWKingY + 2].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempWKingX - 1][tempWKingY + 2].getPiece().isWhite == false){
-					return false;
-				}
-			if(tempWKingX - 1 > 0 && tempWKingY - 2 > 0)
-				if(temp[tempWKingX - 1][tempWKingY - 2].isOccupied() && temp[tempWKingX - 1][tempWKingY - 2].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempWKingX - 1][tempWKingY - 2].getPiece().isWhite == false){
-					return false;
-				}
-			if(tempWKingX + 2 < 8 && tempWKingY + 1 < 8)
-				if(temp[tempWKingX + 2][tempWKingY + 1].isOccupied() && temp[tempWKingX + 2][tempWKingY + 1].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempWKingX + 2][tempWKingY + 1].getPiece().isWhite == false){
-					return false;
-				}
-			if(tempWKingX + 2 < 8 && tempWKingY - 1 > 0)
-				if(temp[tempWKingX + 2][tempWKingY - 1].isOccupied() && temp[tempWKingX + 2][tempWKingY - 1].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempWKingX + 2][tempWKingY - 1].getPiece().isWhite == false){
-					return false;
-				}
-			if(tempWKingX - 2 > 0 && tempWKingY + 1 < 8)
-				if(temp[tempWKingX - 2][tempWKingY + 1].isOccupied() && temp[tempWKingX - 2][tempWKingY + 1].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempWKingX - 2][tempWKingY + 1].getPiece().isWhite == false){
-					return false;
-				}
-			if(tempWKingX - 2 > 0 && tempWKingY - 1 > 0)
-				if(temp[tempWKingX - 2][tempWKingY - 1].isOccupied() && temp[tempWKingX - 2][tempWKingY - 1].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempWKingX - 2][tempWKingY - 1].getPiece().isWhite == false){
-					return false;
-				}
-		} else {//black to move - is black in check?
-			//to the right
-			int i = 1;
-			int j;
-			while(tempBKingX+i < 8 && temp[tempBKingX+i][tempBKingY].isOccupied() == false){
-				i++;
-			}
-			if(tempBKingX+i < 8 && temp[tempBKingX+i][tempBKingY].getPiece().isWhite == true){
-				Piece.TypePiece type = temp[tempBKingX+i][tempBKingY].getPiece().type();
-				if(type == Piece.TypePiece.ROOK || (type == Piece.TypePiece.KING && i==1) || type == Piece.TypePiece.QUEEN){
-					return false;
-				}
-			}
-			
-			//to the left
-			i = -1;
-			while(tempBKingX+i > 0 && temp[tempBKingX+i][tempBKingY].isOccupied() == false){
-				i--;
-			}
-			if(tempBKingX+i > 0 && temp[tempBKingX+i][tempBKingY].getPiece().isWhite == true){
-				Piece.TypePiece type = temp[tempBKingX+i][tempBKingY].getPiece().type();
-				if(type == Piece.TypePiece.ROOK || (type == Piece.TypePiece.KING && i==-1) || type == Piece.TypePiece.QUEEN){
-					return false;
-				}
-			}
-			
-			//to the up
-			j = 1;
-			while(tempBKingY+j < 8 && temp[tempBKingX][tempBKingY+j].isOccupied() == false){
-				j++;
-			}
-			if(tempBKingY+j < 8 && temp[tempBKingX][tempBKingY+j].getPiece().isWhite == true){
-				Piece.TypePiece type = temp[tempBKingX][tempBKingY+j].getPiece().type();
-				if(type == Piece.TypePiece.ROOK || (type == Piece.TypePiece.KING && j==1) || type == Piece.TypePiece.QUEEN){
-					return false;
-				}
-			}
-			
-			//to the down
-			j = -1;
-			while(tempBKingY+j > 0 && temp[tempBKingX][tempBKingY+j].isOccupied() == false){
-				j--;
-			}
-			if(tempBKingY+j > 0 && temp[tempBKingX][tempBKingY+j].getPiece().isWhite == true){
-				Piece.TypePiece type = temp[tempBKingX][tempBKingY+j].getPiece().type();
-				if(type == Piece.TypePiece.ROOK || (type == Piece.TypePiece.KING && j==-1) || type == Piece.TypePiece.QUEEN){
-					return false;
-				}
-			}
-			
-			//to the top right
-			i = 1;
-			j = 1;
-			while(tempBKingX+i < 8 && tempBKingY+j < 8 && temp[tempBKingX+i][tempBKingY+j].isOccupied() == false){
-				i++;
-				j++;
-			}
-			if(tempBKingX+i < 8 && tempBKingY+j < 8 && temp[tempBKingX+i][tempBKingY+j].getPiece().isWhite == true){
-				Piece.TypePiece type = temp[tempBKingX+i][tempBKingY+j].getPiece().type();
-				if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && j==1) || type == Piece.TypePiece.QUEEN || (type == Piece.TypePiece.PAWN && j==1)){
-					return false;
-				}
-			}
-			
-			//to the bottom right
-			i = 1;
-			j = -1;
-			while(tempBKingX+i < 8 && tempBKingY+j > 0 && temp[tempBKingX+i][tempBKingY+j].isOccupied() == false){
-				i++;
-				j--;
-			}
-			if(tempBKingX+i < 8 && tempBKingY+j > 0 && temp[tempBKingX+i][tempBKingY+j].getPiece().isWhite == true){
-				Piece.TypePiece type = temp[tempBKingX+i][tempBKingY+j].getPiece().type();
-				if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && i==1) || type == Piece.TypePiece.QUEEN){
-					return false;
-				}
-			}
-			
-			//to the bottom left
-			i = -1;
-			j = -1;
-			while(tempBKingX+i > 0 && tempBKingY+j > 0 && temp[tempBKingX+i][tempBKingY+j].isOccupied() == false){
-				i--;
-				j--;
-			}
-			if(tempBKingX+i > 0 && tempBKingY+j > 0 && temp[tempBKingX+i][tempBKingY+j].getPiece().isWhite == true){
-				Piece.TypePiece type = temp[tempBKingX+i][tempBKingY+j].getPiece().type();
-				if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && j==-1) || type == Piece.TypePiece.QUEEN){
-					return false;
-				}
-			}
-			
-			//to the top left
-			i = -1;
-			j = 1;
-			while(tempBKingX+i > 0 && tempBKingY+j < 8 && temp[tempBKingX+i][tempBKingY+j].isOccupied() == false){
-				i--;
-				j++;
-			}
-			if(tempBKingX+i > 0 && tempBKingY+j < 8 && temp[tempBKingX+i][tempBKingY+j].getPiece().isWhite == true){
-				Piece.TypePiece type = temp[tempBKingX+i][tempBKingY+j].getPiece().type();
-				if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && j==1) || type == Piece.TypePiece.QUEEN || (type == Piece.TypePiece.PAWN && j==1)){
-					return false;
-				}
-			}
-			if(tempBKingX + 1 < 8 && tempBKingY + 2 < 8)
-				if(temp[tempBKingX + 1][tempBKingY + 2].isOccupied() && temp[tempBKingX + 1][tempBKingY + 2].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempBKingX + 1][tempBKingY +2].getPiece().isWhite == true){
-					return false;
-				}
-			if(tempBKingX + 1 < 8 && tempBKingY - 2 > 0)
-				if(temp[tempBKingX + 1][tempBKingY - 2].isOccupied() && temp[tempBKingX + 1][tempBKingY - 2].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempBKingX + 1][tempBKingY - 2].getPiece().isWhite == true){
-					return false;
-				}
-			if(tempBKingX - 1 > 0 && tempBKingY + 2 < 8)
-				if(temp[tempBKingX - 1][tempBKingY + 2].isOccupied() && temp[tempBKingX - 1][tempBKingY + 2].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempBKingX - 1][tempBKingY + 2].getPiece().isWhite == true){
-					return false;
-				}
-			if(tempBKingX - 1 > 0 && tempBKingY - 2 > 0)
-				if(temp[tempBKingX - 1][tempBKingY - 2].isOccupied() && temp[tempBKingX - 1][tempBKingY - 2].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempBKingX - 1][tempBKingY - 2].getPiece().isWhite == true){
-					return false;
-				}
-			if(tempBKingX + 2 < 8 && tempBKingY + 1 < 8)
-				if(temp[tempBKingX + 2][tempBKingY + 1].isOccupied() && temp[tempBKingX + 2][tempBKingY + 1].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempBKingX + 2][tempBKingY + 1].getPiece().isWhite == true){
-					return false;
-				}
-			if(tempBKingX + 2 < 8 && tempBKingY - 1 > 0)
-				if(temp[tempBKingX + 2][tempBKingY - 1].isOccupied() && temp[tempBKingX + 2][tempBKingY - 1].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempBKingX + 2][tempBKingY - 1].getPiece().isWhite == true){
-					return false;
-				}
-			if(tempBKingX - 2 > 0 && tempBKingY + 1 < 8)
-				if(temp[tempBKingX - 2][tempBKingY + 1].isOccupied() && temp[tempBKingX - 2][tempBKingY + 1].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempBKingX - 2][tempBKingY + 1].getPiece().isWhite == true){
-					return false;
-				}
-			if(tempBKingX - 2 > 0 && tempBKingY - 1 > 0)
-				if(temp[tempBKingX - 2][tempBKingY - 1].isOccupied() && temp[tempBKingX - 2][tempBKingY - 1].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempBKingX - 2][tempBKingY - 1].getPiece().isWhite == true){
-					return false;
-				}
 		}
 		
+		//to the up
+		j = 1;
+		while(tempKingY+j < 8 && temp[tempKingX][tempKingY+j].isOccupied() == false){
+			j++;
+		}
+		if(tempKingY+j < 8 && temp[tempKingX][tempKingY+j].getPiece().isWhite != whiteMove){
+			Piece.TypePiece type = temp[tempKingX][tempKingY+j].getPiece().type();
+			if(type == Piece.TypePiece.ROOK || (type == Piece.TypePiece.KING && j==1) || type == Piece.TypePiece.QUEEN){
+				return false;
+			}
+		}
+		
+		//to the down
+		j = -1;
+		while(tempKingY+j > 0 && temp[tempKingX][tempKingY+j].isOccupied() == false){
+			j--;
+		}
+		if(tempKingY+j > 0 && temp[tempKingX][tempKingY+j].getPiece().isWhite != whiteMove){
+			Piece.TypePiece type = temp[tempKingX][tempKingY+j].getPiece().type();
+			if(type == Piece.TypePiece.ROOK || (type == Piece.TypePiece.KING && j==-1) || type == Piece.TypePiece.QUEEN){
+				return false;
+			}
+		}
+		
+		//to the top right
+		i = 1;
+		j = 1;
+		while(tempKingX+i < 8 && tempKingY+j < 8 && temp[tempKingX+i][tempKingY+j].isOccupied() == false){
+			i++;
+			j++;
+		}
+		if(tempKingX+i < 8 && tempKingY+j < 8 && temp[tempKingX+i][tempKingY+j].getPiece().isWhite != whiteMove){
+			Piece.TypePiece type = temp[tempKingX+i][tempKingY+j].getPiece().type();
+			if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && j==1) || type == Piece.TypePiece.QUEEN || (type == Piece.TypePiece.PAWN && j==1)){
+				return false;
+			}
+		}
+		
+		//to the bottom right
+		i = 1;
+		j = -1;
+		while(tempKingX+i < 8 && tempKingY+j > 0 && temp[tempKingX+i][tempKingY+j].isOccupied() == false){
+			i++;
+			j--;
+		}
+		if(tempKingX+i < 8 && tempKingY+j > 0 && temp[tempKingX+i][tempKingY+j].getPiece().isWhite != whiteMove){
+			Piece.TypePiece type = temp[tempKingX+i][tempKingY+j].getPiece().type();
+			if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && i==1) || type == Piece.TypePiece.QUEEN){
+				return false;
+			}
+		}
+		
+		//to the bottom left
+		i = -1;
+		j = -1;
+		while(tempKingX+i > 0 && tempKingY+j > 0 && temp[tempKingX+i][tempKingY+j].isOccupied() == false){
+			i--;
+			j--;
+		}
+		if(tempKingX+i > 0 && tempKingY+j > 0 && temp[tempKingX+i][tempKingY+j].getPiece().isWhite != whiteMove){
+			Piece.TypePiece type = temp[tempKingX+i][tempKingY+j].getPiece().type();
+			if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && j==-1) || type == Piece.TypePiece.QUEEN){
+				return false;
+			}
+		}
+		
+		//to the top left
+		i = -1;
+		j = 1;
+		while(tempKingX+i > 0 && tempKingY+j < 8 && temp[tempKingX+i][tempKingY+j].isOccupied() == false){
+			i--;
+			j++;
+		}
+		if(tempKingX+i > 0 && tempKingY+j < 8 && temp[tempKingX+i][tempKingY+j].getPiece().isWhite != whiteMove){
+			Piece.TypePiece type = temp[tempKingX+i][tempKingY+j].getPiece().type();
+			if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && j==1) || type == Piece.TypePiece.QUEEN || (type == Piece.TypePiece.PAWN && j==1)){
+				return false;
+			}
+		}
+		if(tempKingX + 1 < 8 && tempKingY + 2 < 8)
+			if(temp[tempKingX + 1][tempKingY +2].isOccupied() && temp[tempKingX + 1][tempKingY + 2].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempKingX + 1][tempKingY +2].getPiece().isWhite != whiteMove){
+				return false;
+			}
+		if(tempKingX + 1 < 8 && tempKingY - 2 > 0)
+			if(temp[tempKingX + 1][tempKingY - 2].isOccupied() && temp[tempKingX + 1][tempKingY - 2].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempKingX + 1][tempKingY - 2].getPiece().isWhite != whiteMove){
+				return false;
+			}
+		if(tempKingX - 1 > 0 && tempKingY + 2 < 8)
+			if(temp[tempKingX - 1][tempKingY + 2].isOccupied() && temp[tempKingX - 1][tempKingY + 2].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempKingX - 1][tempKingY + 2].getPiece().isWhite != whiteMove){
+				return false;
+			}
+		if(tempKingX - 1 > 0 && tempKingY - 2 > 0)
+			if(temp[tempKingX - 1][tempKingY - 2].isOccupied() && temp[tempKingX - 1][tempKingY - 2].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempKingX - 1][tempKingY - 2].getPiece().isWhite != whiteMove){
+				return false;
+			}
+		if(tempKingX + 2 < 8 && tempKingY + 1 < 8)
+			if(temp[tempKingX + 2][tempKingY + 1].isOccupied() && temp[tempKingX + 2][tempKingY + 1].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempKingX + 2][tempKingY + 1].getPiece().isWhite != whiteMove){
+				return false;
+			}
+		if(tempKingX + 2 < 8 && tempKingY - 1 > 0)
+			if(temp[tempKingX + 2][tempKingY - 1].isOccupied() && temp[tempKingX + 2][tempKingY - 1].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempKingX + 2][tempKingY - 1].getPiece().isWhite != whiteMove){
+				return false;
+			}
+		if(tempKingX - 2 > 0 && tempKingY + 1 < 8)
+			if(temp[tempKingX - 2][tempKingY + 1].isOccupied() && temp[tempKingX - 2][tempKingY + 1].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempKingX - 2][tempKingY + 1].getPiece().isWhite != whiteMove){
+				return false;
+			}
+		if(tempKingX - 2 > 0 && tempKingY - 1 > 0)
+			if(temp[tempKingX - 2][tempKingY - 1].isOccupied() && temp[tempKingX - 2][tempKingY - 1].getPiece().type() == Piece.TypePiece.KNIGHT && temp[tempKingX - 2][tempKingY - 1].getPiece().isWhite != whiteMove){
+				return false;
+			}
+		
+		// If we reach this line of code, the move is legal
 		board = temp;
-		wKingX = tempWKingX;
-		wKingY = tempWKingY;
-		bKingX = tempBKingX;
-		bKingY = tempBKingY;
+
 		if(whiteMove){
 			whiteMove = false;
+			wKingX = tempKingX;
+			wKingY = tempKingY;
 		}
-		else whiteMove = true;
+		else {
+			whiteMove = true;
+			bKingX = tempKingX;
+			bKingY = tempKingY;
+		}
 		return true;
 	}
 	
@@ -455,16 +320,10 @@ public class Board {
 				else return;
 			}
 			else if (movedPiece.type() == Piece.TypePiece.ROOK){
-				
 				if(y1-y2 == 0){
 					if(x1-x2 > 0){
-			
 						for(int i = x1-x2;i>1;i--){
-							
 							if(board[x2-1+i][y2].isOccupied()){
-								return;
-							}
-							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
 								return;
 							}
 						}
@@ -475,22 +334,14 @@ public class Board {
 							if(board[x1+i-1][y2].isOccupied()){
 								return;
 							}
-							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
-								return;
-							}
 						}
 							executeMove(x1,y1,x2,y2,movedPiece);
 					}	
 				}
 				if(x1-x2 == 0){
 					if(y1-y2 > 0){
-						
 						for(int i = y1-y2;i>1;i--){
-							
 							if(board[x2][y1-i+1].isOccupied()){
-								return;
-							}
-							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
 								return;
 							}
 						}
@@ -499,9 +350,6 @@ public class Board {
 					else if(y2-y1 > 0){
 						for(int i = y2-y1;i>1;i--){
 							if(board[x2][y2-i+1].isOccupied()){
-								return;
-							}
-							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
 								return;
 							}
 						}
@@ -516,18 +364,12 @@ public class Board {
 							if(board[x2+i-1][y2+i-1].isOccupied()){
 								return;
 							}
-							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
-								return;
-							}
 						}
 						executeMove(x1,y1,x2,y2,movedPiece);
 					}
 					else if(x2-x1 > 0 && y2-y1 > 0){//top right
 						for(int i = y2-y1;i>1;i--){
 							if(board[x2-i+1][y2-i+1].isOccupied()){
-								return;
-							}
-							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
 								return;
 							}
 						}
@@ -538,18 +380,12 @@ public class Board {
 							if(board[x2-i+1][y2+i-1].isOccupied()){
 								return;
 							}
-							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
-								return;
-							}
 						}
 						executeMove(x1,y1,x2,y2,movedPiece);
 					}
 					else if(x1-x2 > 0 && y2-y1 > 0){//top left
 						for(int i = y2-y1;i>1;i--){
 							if(board[x2+i-1][y2-i+1].isOccupied()){
-								return;
-							}
-							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
 								return;
 							}
 						}
@@ -565,18 +401,12 @@ public class Board {
 							if(board[x1+i-1][y1+i-1].isOccupied()){
 								return;
 							}
-							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
-								return;
-							}
 						}
 						executeMove(x1,y1,x2,y2,movedPiece);
 					}
 					else if(x2-x1 > 0 && y2-y1 > 0){//top right
 						for(int i = y2-y1;i>1;i--){
 							if(board[x2-i+1][y2-i+1].isOccupied()){
-								return;
-							}
-							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
 								return;
 							}
 						}
@@ -587,9 +417,6 @@ public class Board {
 							if(board[x2-i+1][y2+i-1].isOccupied()){
 								return;
 							}
-							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
-								return;
-							}
 						}
 						executeMove(x1,y1,x2,y2,movedPiece);
 					}
@@ -598,24 +425,20 @@ public class Board {
 							if(board[x2+i-1][y2-i+1].isOccupied()){
 								return;
 							}
-							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
-								return;
-							}
 						}
 						executeMove(x1,y1,x2,y2,movedPiece);
 					}
 				}
 				if(y1-y2 == 0){
 					if(x1-x2 > 0){
-			
+						if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == whiteMove){
+							return;
+						}
 						for(int i = x1-x2;i>1;i--){
-							
 							if(board[x2-1+i][y2].isOccupied()){
 								return;
 							}
-							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
-								return;
-							}
+							
 						}
 							executeMove(x1,y1,x2,y2,movedPiece);
 					}
@@ -624,22 +447,14 @@ public class Board {
 							if(board[x1+i-1][y2].isOccupied()){
 								return;
 							}
-							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
-								return;
-							}
 						}
 							executeMove(x1,y1,x2,y2,movedPiece);
 					}
 				}
 				if(x1-x2 == 0){
 					if(y1-y2 > 0){
-						
 						for(int i = y1-y2;i>1;i--){
-							
 							if(board[x2][y1-i+1].isOccupied()){
-								return;
-							}
-							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
 								return;
 							}
 						}
@@ -650,19 +465,16 @@ public class Board {
 							if(board[x2][y2-i+1].isOccupied()){
 								return;
 							}
-							if(board[x2][y2].isOccupied() && board[x2][y2].getPiece().isWhite() == true){
-								return;
-							}
 						}
-							executeMove(x1,y1,x2,y2,movedPiece);
+						executeMove(x1,y1,x2,y2,movedPiece);
 					}
 				}
 			}
 			else if(movedPiece.type() == Piece.TypePiece.KING){
-				if((Math.abs(x2-x1) == 1 && Math.abs(y2-y1) <=  1)|| (Math.abs(y2-y1) == 1 && Math.abs(x2-x1) <=  1)){
+				if((Math.abs(x2-x1) == 1 && Math.abs(y2-y1) <=  1) || (Math.abs(y2-y1) == 1 && Math.abs(x2-x1) <= 1)){
 					executeMove(x1,y1,x2,y2,movedPiece);
 				}
-				else if(movedPiece.hasMoved ==/*I spent about a solid hour not realizing there was just a syntax error. -_-*/ false && x2-x1 == 2 && board[7][0].getPiece().hasMoved() == false && board[5][0].isOccupied() == false){
+				else if(movedPiece.hasMoved == false && x2-x1 == 2 && board[7][0].getPiece().hasMoved() == false && board[5][0].isOccupied() == false){
 					executeMove(x1,y1,x2,y2,movedPiece);
 					movedPiece = board[7][0].getPiece();
 					board[7][0].setPiece(null);
@@ -686,7 +498,6 @@ public class Board {
 					board[0][7].setPiece(null);
 					board[3][7].setPiece(movedPiece);
 				}
-				
 				else return;
 			}
 			

@@ -213,6 +213,7 @@ public class ChessUI {
 				int y1;
 				int x2;
 				int y2;
+				Piece.TypePiece promote = Piece.TypePiece.PAWN;
 				try {
 					switch (origin.charAt(0)) {
 						case 'a':
@@ -326,8 +327,30 @@ public class ChessUI {
 						default:
 							throw new Exception();
 					}
+					if ((y2 == 7 || y2 == 0) && board.board[x1][y1].getPiece().type() == Piece.TypePiece.PAWN) {
+						if (destination.length() == 4) {
+							switch (destination.charAt(3)) {
+								case 'Q':
+									promote = Piece.TypePiece.QUEEN;
+									break;
+								case 'R':
+									promote = Piece.TypePiece.ROOK;
+									break;
+								case 'B':
+									promote = Piece.TypePiece.BISHOP;
+									break;
+								case 'N':
+									promote = Piece.TypePiece.KNIGHT;
+									break;
+								default:
+									throw new Exception();
+							}
+						} else {
+							throw new Exception();
+						}
+					}
 					lblCanMove.setText("");
-					board.move(x1, y1, x2, y2);
+					board.move(x1, y1, x2, y2, promote);
 					for (int i=0; i<8; i++)
 						for (int j=0; j<8; j++)
 							if (board.board[i][j].isOccupied()) {

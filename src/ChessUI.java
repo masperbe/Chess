@@ -326,7 +326,6 @@ public class ChessUI {
 						default:
 							throw new Exception();
 					}
-					lblCanMove.setText("");
 					board.move(x1, y1, x2, y2);
 					for (int i=0; i<8; i++)
 						for (int j=0; j<8; j++)
@@ -380,6 +379,12 @@ public class ChessUI {
 							squareIcon[i][j].setBounds(225 + (71*i), 632 - (71*j),50,50);
 							frame.getContentPane().add(squareIcon[i][j]);
 						}
+					}
+					if(board.getCheck()){
+						lblCanMove.setText("You are in check!");
+					}
+					else{
+						lblCanMove.setText("");
 					}
 					frame.getContentPane().add(boardImg);
 					frame.repaint();

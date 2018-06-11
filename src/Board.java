@@ -10,6 +10,7 @@ public class Board {
 	private int wKingY;
 	private int bKingX;
 	private int bKingY;
+	private boolean check = false;
 	
 	public Board() {
 		board = new Square[8][8];
@@ -62,6 +63,135 @@ public class Board {
 
 	public int getMoveNumber() {
 		return moveNumber;
+	}
+	
+	public boolean getCheck() {
+		return check;
+	}
+	public boolean opposingCheck(int x1, int y1, int x2, int y2, Piece movedPiece) {
+		if (!whiteMove){
+			if(movedPiece.type() == Piece.TypePiece.KNIGHT){
+				if(x2 + 1 == bKingX && y2 + 2 == bKingY){
+					return true;
+				}
+				if(x2 + 1 == bKingX && y2 - 2 == bKingY){
+					return true;
+				}
+				if(x2 - 1 == bKingX && y2 + 2 == bKingY){
+					return true;
+				}
+				if(x2 - 1 == bKingX && y2 - 2 == bKingY){
+					return true;
+				}
+				if(x2 + 2 == bKingX && y2 + 1 == bKingY){
+					return true;
+				}
+				if(x2 + 2 == bKingX && y2 - 1 == bKingY){
+					return true;
+				}
+				if(x2 - 2 == bKingX && y2 + 1 == bKingY){
+					return true;
+				}
+				if(x2 - 2 == bKingX && y2 - 1 == bKingY){
+					return true;
+				}
+				else return false;
+			}
+			if(movedPiece.type() == Piece.TypePiece.PAWN){
+				if(x2 + 1 == bKingX && y2 + 1 == bKingY){
+					return true;
+				}
+				if(x2 - 1 == bKingX && y2 + 1 == bKingY){
+					return true;
+				}
+				else return false;
+			}
+			if(movedPiece.type() == Piece.TypePiece.ROOK || movedPiece.type() == Piece.TypePiece.QUEEN){
+				int i = 1;
+				int j;
+				while(x2 + i < 8 && x2+i != bKingX){
+					i++;
+				}
+				if (x2 + i < 8){
+					if (x2+i == bKingX){
+						return true;
+					}
+				}
+				i = -1;
+				while(x2 - i > 0 && x2-i != bKingX){
+					i--;
+				}
+				if (x2 - i > 0){
+					if (x2-i == bKingX){
+						return true;
+					}
+				}
+				j = 1;
+				while(y2 + j < 8 && y2+j != bKingY){
+					j++;
+				}
+				if (y2 + j < 8){
+					if (y2+j == bKingY){
+						return true;
+					}
+				}
+				j = -1;
+				while(y2 - j > 0 && y2-j != bKingY){
+					j--;
+				}
+				if (y2 - j > 0){
+					if (y2-j == bKingY){
+						return true;
+					}
+				}
+				
+			}
+			if(movedPiece.type() == Piece.TypePiece.BISHOP || movedPiece.type() == Piece.TypePiece.QUEEN){
+				int i = 1;
+				int j= 1;
+				while(x2+i < 8 && y2+j < 8 && x2 != bKingX && y2 != bKingY){
+					i++;
+					j++;
+				}
+				if(x2+i <8 && y2+1 <8){
+					if (x2+i == bKingX && y2 +j == bKingY){
+						return true;
+					}
+				}
+				i = -1;
+				while(x2-i < 0 && y2+j < 8 && x2 != bKingX && y2 != bKingY){
+					i--;
+					j++;
+				}
+				if(x2-i <0 && y2+1 <8){
+					if (x2-i == bKingX && y2 +j == bKingY){
+						return true;
+					}
+				}
+				j = -1;
+				while(x2+i < 8 && y2-j < 0 && x2 != bKingX && y2 != bKingY){
+					i++;
+					j--;
+				}
+				if(x2+i <8 && y2-1 <0){
+					if (x2+i == bKingX && y2 -j == bKingY){
+						return true;
+					}
+				}
+				i = -1;
+				j = -1;
+				while(x2-i < 0 && y2-j < 0 && x2 != bKingX && y2 != bKingY){
+					i--;
+					j--;
+				}
+				if(x2-i <0 && y2-1 <0){
+					if (x2-i == bKingX && y2 -j == bKingY){
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
 	// The purpose of this method is to check to see whether the selected move would leave the
@@ -232,7 +362,7 @@ public class Board {
 		
 		// If we reach this line of code, the move is legal
 		board = temp;
-
+		
 		if(whiteMove){
 			whiteMove = false;
 			wKingX = tempKingX;
@@ -243,6 +373,7 @@ public class Board {
 			bKingX = tempKingX;
 			bKingY = tempKingY;
 		}
+		check = opposingCheck(x1, y1, x2, y2, movedPiece);
 		return true;
 	}
 	

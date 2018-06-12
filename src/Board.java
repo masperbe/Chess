@@ -110,6 +110,9 @@ public class Board {
 				int i = 1;
 				int j;
 				while(x2 + i < 8 && x2+i != bKingX){
+					if(board[x2+i][y2].isOccupied()){
+						break;
+					}
 					i++;
 				}
 				if (x2 + i < 8){
@@ -119,6 +122,9 @@ public class Board {
 				}
 				i = -1;
 				while(x2 + i > 0 && x2+i != bKingX){
+					if(board[x2+i][y2].isOccupied()){
+						break;
+					}
 					i--;
 				}
 				if (x2 + i > 0){
@@ -128,6 +134,9 @@ public class Board {
 				}
 				j = 1;
 				while(y2 + j < 8 && y2+j != bKingY){
+					if(board[x2+i][y2].isOccupied()){
+						break;
+					}
 					j++;
 				}
 				if (y2 + j < 8){
@@ -137,6 +146,9 @@ public class Board {
 				}
 				j = -1;
 				while(y2 + j > 0 && y2+j != bKingY){
+					if(board[x2][y2+j].isOccupied()){
+						break;
+					}
 					j--;
 				}
 				if (y2 + j > 0){
@@ -150,6 +162,9 @@ public class Board {
 				int i = 1;
 				int j= 1;
 				while(x2+i < 8 && y2+j < 8 && x2 != bKingX && y2 != bKingY){
+					if(board[x2+i][y2+j].isOccupied()){
+						break;
+					}
 					i++;
 					j++;
 				}
@@ -159,32 +174,41 @@ public class Board {
 					}
 				}
 				i = -1;
-				while(x2+i < 0 && y2+j < 8 && x2 != bKingX && y2 != bKingY){
+				while(x2+i > 0 && y2+j < 8 && x2 != bKingX && y2 != bKingY){
+					if(board[x2+i][y2+j].isOccupied()){
+						break;
+					}
 					i--;
 					j++;
 				}
-				if(x2+i <0 && y2+1 <8){
+				if(x2+i >0 && y2+1 <8){
 					if (x2+i == bKingX && y2 +j == bKingY){
 						return true;
 					}
 				}
 				j = -1;
-				while(x2+i < 8 && y2+j < 0 && x2 != bKingX && y2 != bKingY){
+				while(x2+i < 8 && y2+j > 0 && x2 != bKingX && y2 != bKingY){
+					if(board[x2+i][y2+j].isOccupied()){
+						break;
+					}
 					i++;
 					j--;
 				}
-				if(x2+i <8 && y2-1 <0){
+				if(x2+i <8 && y2-1 >0){
 					if (x2+i == bKingX && y2 +j == bKingY){
 						return true;
 					}
 				}
 				i = -1;
 				j = -1;
-				while(x2+i < 0 && y2+j < 0 && x2 != bKingX && y2 != bKingY){
+				while(x2+i > 0 && y2+j > 0 && x2 != bKingX && y2 != bKingY){
+					if(board[x2+i][y2+j].isOccupied()){
+						break;
+					}
 					i--;
 					j--;
 				}
-				if(x2-i <0 && y2-1 <0){
+				if(x2-i >0 && y2-1 >0){
 					if (x2+i == bKingX && y2 +j == bKingY){
 						return true;
 					}

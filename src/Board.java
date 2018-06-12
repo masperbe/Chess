@@ -113,16 +113,16 @@ public class Board {
 					i++;
 				}
 				if (x2 + i < 8){
-					if (x2+i == bKingX){
+					if (x2+i == bKingX && y2 == bKingY){
 						return true;
 					}
 				}
 				i = -1;
-				while(x2 - i > 0 && x2-i != bKingX){
+				while(x2 + i > 0 && x2+i != bKingX){
 					i--;
 				}
-				if (x2 - i > 0){
-					if (x2-i == bKingX){
+				if (x2 + i > 0){
+					if (x2+i == bKingX && y2 == bKingY){
 						return true;
 					}
 				}
@@ -131,16 +131,16 @@ public class Board {
 					j++;
 				}
 				if (y2 + j < 8){
-					if (y2+j == bKingY){
+					if (y2+j == bKingY && x2 == bKingX){
 						return true;
 					}
 				}
 				j = -1;
-				while(y2 - j > 0 && y2-j != bKingY){
+				while(y2 + j > 0 && y2+j != bKingY){
 					j--;
 				}
-				if (y2 - j > 0){
-					if (y2-j == bKingY){
+				if (y2 + j > 0){
+					if (y2+j == bKingY && x2 == bKingX){
 						return true;
 					}
 				}
@@ -159,33 +159,155 @@ public class Board {
 					}
 				}
 				i = -1;
-				while(x2-i < 0 && y2+j < 8 && x2 != bKingX && y2 != bKingY){
+				while(x2+i < 0 && y2+j < 8 && x2 != bKingX && y2 != bKingY){
 					i--;
 					j++;
 				}
-				if(x2-i <0 && y2+1 <8){
-					if (x2-i == bKingX && y2 +j == bKingY){
+				if(x2+i <0 && y2+1 <8){
+					if (x2+i == bKingX && y2 +j == bKingY){
 						return true;
 					}
 				}
 				j = -1;
-				while(x2+i < 8 && y2-j < 0 && x2 != bKingX && y2 != bKingY){
+				while(x2+i < 8 && y2+j < 0 && x2 != bKingX && y2 != bKingY){
 					i++;
 					j--;
 				}
 				if(x2+i <8 && y2-1 <0){
-					if (x2+i == bKingX && y2 -j == bKingY){
+					if (x2+i == bKingX && y2 +j == bKingY){
 						return true;
 					}
 				}
 				i = -1;
 				j = -1;
-				while(x2-i < 0 && y2-j < 0 && x2 != bKingX && y2 != bKingY){
+				while(x2+i < 0 && y2+j < 0 && x2 != bKingX && y2 != bKingY){
 					i--;
 					j--;
 				}
 				if(x2-i <0 && y2-1 <0){
-					if (x2-i == bKingX && y2 -j == bKingY){
+					if (x2+i == bKingX && y2 +j == bKingY){
+						return true;
+					}
+				}
+			}
+		}
+		else{
+			if(movedPiece.type() == Piece.TypePiece.KNIGHT){
+				if(x2 + 1 == wKingX && y2 + 2 == wKingY){
+					return true;
+				}
+				if(x2 + 1 == wKingX && y2 - 2 == wKingY){
+					return true;
+				}
+				if(x2 - 1 == wKingX && y2 + 2 == wKingY){
+					return true;
+				}
+				if(x2 - 1 == wKingX && y2 - 2 == wKingY){
+					return true;
+				}
+				if(x2 + 2 == wKingX && y2 + 1 == wKingY){
+					return true;
+				}
+				if(x2 + 2 == wKingX && y2 - 1 == wKingY){
+					return true;
+				}
+				if(x2 - 2 == wKingX && y2 + 1 == wKingY){
+					return true;
+				}
+				if(x2 - 2 == wKingX && y2 - 1 == wKingY){
+					return true;
+				}
+				else return false;
+			}
+			if(movedPiece.type() == Piece.TypePiece.PAWN){
+				if(x2 + 1 == wKingX && y2 - 1 == wKingY){
+					return true;
+				}
+				if(x2 - 1 == wKingX && y2 - 1 == wKingY){
+					return true;
+				}
+				else return false;
+			}
+			if(movedPiece.type() == Piece.TypePiece.ROOK || movedPiece.type() == Piece.TypePiece.QUEEN){
+				int i = 1;
+				int j;
+				while(x2 + i < 8 && x2+i != wKingX){
+					i++;
+				}
+				if (x2 + i < 8){
+					if (x2+i == wKingX && y2 == wKingY){
+						return true;
+					}
+				}
+				i = -1;
+				while(x2 + i > 0 && x2+i != wKingX){
+					i--;
+				}
+				if (x2 + i > 0){
+					if (x2+i == wKingX && y2 == wKingY){
+						return true;
+					}
+				}
+				j = 1;
+				while(y2 + j < 8 && y2+j != wKingY){
+					j++;
+				}
+				if (y2 + j < 8){
+					if (y2+j == wKingY && x2 == wKingX){
+						return true;
+					}
+				}
+				j = -1;
+				while(y2 + j > 0 && y2+j != wKingY){
+					j--;
+				}
+				if (y2 + j > 0){
+					if (y2+j == wKingY  && x2 == wKingX){
+						return true;
+					}
+				}
+				
+			}
+			if(movedPiece.type() == Piece.TypePiece.BISHOP || movedPiece.type() == Piece.TypePiece.QUEEN){
+				int i = 1;
+				int j= 1;
+				while(x2+i < 8 && y2+j < 8 && x2 != wKingX && y2 != wKingY){
+					i++;
+					j++;
+				}
+				if(x2+i <8 && y2+j <8){
+					if (x2+i == wKingX && y2 +j == wKingY){
+						return true;
+					}
+				}
+				i = -1;
+				while(x2+i < 0 && y2+j < 8 && x2 != wKingX && y2 != wKingY){
+					i--;
+					j++;
+				}
+				if(x2+i <0 && y2+j <8){
+					if (x2+i == wKingX && y2 +j == wKingY){
+						return true;
+					}
+				}
+				j = -1;
+				while(x2+i < 8 && y2+j < 0 && x2 != wKingX && y2 != wKingY){
+					i++;
+					j--;
+				}
+				if(x2+i <8 && y2+j <0){
+					if (x2+i == wKingX && y2 +j == wKingY){
+						return true;
+					}
+				}
+				i = -1;
+				j = -1;
+				while(x2+i < 0 && y2+j < 0 && x2 != wKingX && y2 != wKingY){
+					i--;
+					j--;
+				}
+				if(x2+i <0 && y2+j <0){
+					if (x2+i == wKingX && y2 +j == wKingY){
 						return true;
 					}
 				}

@@ -75,10 +75,16 @@ public class ChessUI {
 		ImageIcon blackRookIcon = new ImageIcon("img/brook.png");
 		ImageIcon blackQueenIcon = new ImageIcon("img/bqueen.png");
 		ImageIcon blackKingIcon = new ImageIcon("img/bking.png");
+		ImageIcon capWPIcon = new ImageIcon("img/wpawnCap.png");
+		//TODO: make the cpaWPIcon and wpawnCap have cap in the same place
 		JLabel[][] squareIcon = new JLabel[8][8];
 		for (int i=0; i<8; i++)
 			for (int j=0; j<8; j++)
 				squareIcon[i][j] = new JLabel();
+		//TODO: change capWPLbl
+		JLabel[] capWPLbl = new JLabel[8];
+		for (int i=0; i<8; i++)
+			capWPLbl[i] = new JLabel();
 		
 		JButton btnNewGame = new JButton("New Game?");
 		btnNewGame.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 82));
@@ -161,18 +167,6 @@ public class ChessUI {
 		lblTextOutput.setBounds(818, 143, 352, 144);
 		frame.getContentPane().add(lblTextOutput);
 		
-		JButton btnCapturedWhite = new JButton("Captured white pieces");
-		btnCapturedWhite.setBounds(12, 165, 192, 249);
-		frame.getContentPane().add(btnCapturedWhite);
-		
-		JButton btnCapturedBlack = new JButton("Captured black pieces");
-		btnCapturedBlack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnCapturedBlack.setBounds(12, 427, 192, 249);
-		frame.getContentPane().add(btnCapturedBlack);
-		
 		JButton btnMovePointer = new JButton("Move pointer goes here");
 		btnMovePointer.setBounds(1251, 219, 219, 325);
 		frame.getContentPane().add(btnMovePointer);
@@ -209,10 +203,12 @@ public class ChessUI {
 			public void actionPerformed (ActionEvent ae) {
 				String origin = textFieldOrigin.getText();
 				String destination = textFieldDestination.getText();
-				int x1;
-				int y1;
-				int x2;
-				int y2;
+				int x1,y1,x2,y2;
+				int capturedWPawns = 8, capturedBPawns = 8;
+				int capturedWKnights = 2, capturedBKnights = 2;
+				int capturedWBishops = 2, capturedBBishops = 2;
+				int capturedWRooks = 2, capturedBRooks = 2;
+				int capturedWQueens = 1, capturedBQueens = 1;
 				Piece.TypePiece promote = Piece.TypePiece.PAWN;
 				try {
 					switch (origin.charAt(0)) {
@@ -351,26 +347,34 @@ public class ChessUI {
 						}
 					}
 					
+					//this is where the move is resolved
 					board.move(x1, y1, x2, y2, promote);
-
+					textFieldOrigin.setText("");
+					textFieldDestination.setText("");
+					
 					for (int i=0; i<8; i++)
 						for (int j=0; j<8; j++)
 							if (board.board[i][j].isOccupied()) {
 								if (board.board[i][j].getPiece().isWhite()) {
 									switch (board.board[i][j].getPiece().type()) {
 										case PAWN: squareIcon[i][j].setIcon(whitePawnIcon);
+										capturedWPawns--;
 										break;
 										
 										case KNIGHT: squareIcon[i][j].setIcon(whiteKnightIcon);
+										capturedWKnights--;
 										break;
 										
 										case BISHOP: squareIcon[i][j].setIcon(whiteBishopIcon);
+										capturedWBishops--;
 										break;
 										
 										case ROOK: squareIcon[i][j].setIcon(whiteRookIcon);
+										capturedWRooks--;
 										break;
 										
 										case QUEEN: squareIcon[i][j].setIcon(whiteQueenIcon);
+										capturedWQueens--;
 										break;
 										
 										case KING: squareIcon[i][j].setIcon(whiteKingIcon);
@@ -379,18 +383,23 @@ public class ChessUI {
 								} else {
 									switch (board.board[i][j].getPiece().type()) {
 										case PAWN: squareIcon[i][j].setIcon(blackPawnIcon);
+										capturedBPawns--;
 										break;
 										
 										case KNIGHT: squareIcon[i][j].setIcon(blackKnightIcon);
+										capturedBKnights--;
 										break;
 										
 										case BISHOP: squareIcon[i][j].setIcon(blackBishopIcon);
+										capturedBBishops--;
 										break;
 										
 										case ROOK: squareIcon[i][j].setIcon(blackRookIcon);
+										capturedBRooks--;
 										break;
 										
 										case QUEEN: squareIcon[i][j].setIcon(blackQueenIcon);
+										capturedBQueens--;
 										break;
 										
 										case KING: squareIcon[i][j].setIcon(blackKingIcon);
@@ -406,7 +415,15 @@ public class ChessUI {
 							frame.getContentPane().add(squareIcon[i][j]);
 						}
 					}
-					if(board.getCheck()){
+					//TODO: change capWPLbl
+					for (int i=0; i<capturedWPawns; i++) {
+						capWPLbl[i].setIcon(capWPIcon);
+						capWPLbl[i].setBounds(12, 135 + (30*i), 25, 25);
+						frame.getContentPane().add(capWPLbl[i]);
+					}
+					//TODO: Knights,Bishops,Rooks,Queens
+					
+					if(board.getCheck()) {
 						lblCanMove.setText("You are in check!");
 					}
 					else{

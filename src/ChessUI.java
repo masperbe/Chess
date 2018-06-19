@@ -358,7 +358,7 @@ public class ChessUI {
 							throw new Exception();
 					}
 					
-					/*if ((y2 == 7 || y2 == 0) && board.board[x1][y1].getPiece().type() == Piece.TypePiece.PAWN) {
+					if ((y2 == 7 || y2 == 0) && board.board[x1][y1].getPiece().type() == Piece.TypePiece.PAWN) {
 						if (destination.length() == 3) {
 							switch (destination.charAt(2)) {
 								case 'Q':
@@ -379,7 +379,7 @@ public class ChessUI {
 						} else {
 							throw new Exception();
 						}
-					}*/
+					}
 					
 					//this is where the move is resolved
 					board.move(x1, y1, x2, y2, promote);

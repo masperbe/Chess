@@ -135,7 +135,7 @@ public class Board {
 				}
 				j = 1;
 				while(y2 + j < 8 && y2+j != bKingY){
-					if(board[x2+i][y2].isOccupied()){
+					if(board[x2][y2+j].isOccupied()){
 						break;
 					}
 					j++;
@@ -169,12 +169,13 @@ public class Board {
 					i++;
 					j++;
 				}
-				if(x2+i <8 && y2+1 <8){
+				if(x2+i <8 && y2+j <8){
 					if (x2+i == bKingX && y2 +j == bKingY){
 						return true;
 					}
 				}
 				i = -1;
+				j = 1;
 				while(x2+i > 0 && y2+j < 8 && x2 != bKingX && y2 != bKingY){
 					if(board[x2+i][y2+j].isOccupied()){
 						break;
@@ -182,11 +183,12 @@ public class Board {
 					i--;
 					j++;
 				}
-				if(x2+i >=0 && y2+1 <8){
+				if(x2+i >=0 && y2+j <8){
 					if (x2+i == bKingX && y2 +j == bKingY){
 						return true;
 					}
 				}
+				i = 1;
 				j = -1;
 				while(x2+i < 8 && y2+j > 0 && x2 != bKingX && y2 != bKingY){
 					if(board[x2+i][y2+j].isOccupied()){
@@ -195,7 +197,7 @@ public class Board {
 					i++;
 					j--;
 				}
-				if(x2+i <8 && y2-1 >=0){
+				if(x2+i <8 && y2-j >=0){
 					if (x2+i == bKingX && y2 +j == bKingY){
 						return true;
 					}
@@ -245,10 +247,10 @@ public class Board {
 				else return false;
 			}
 			if(movedPiece.type() == Piece.TypePiece.PAWN){
-				if(x2 + 1 == wKingX && y2 - 1 == wKingY){
+				if(x2 + 1 == wKingX && y2 + 1 == wKingY){
 					return true;
 				}
-				if(x2 - 1 == wKingX && y2 - 1 == wKingY){
+				if(x2 - 1 == wKingX && y2 + 1 == wKingY){
 					return true;
 				}
 				else return false;
@@ -257,6 +259,9 @@ public class Board {
 				int i = 1;
 				int j;
 				while(x2 + i < 8 && x2+i != wKingX){
+					if(board[x2+i][y2].isOccupied()){
+						break;
+					}
 					i++;
 				}
 				if (x2 + i < 8){
@@ -266,6 +271,9 @@ public class Board {
 				}
 				i = -1;
 				while(x2 + i > 0 && x2+i != wKingX){
+					if(board[x2+i][y2].isOccupied()){
+						break;
+					}
 					i--;
 				}
 				if (x2 + i >= 0){
@@ -275,6 +283,9 @@ public class Board {
 				}
 				j = 1;
 				while(y2 + j < 8 && y2+j != wKingY){
+					if(board[x2][y2+j].isOccupied()){
+						break;
+					}
 					j++;
 				}
 				if (y2 + j < 8){
@@ -284,10 +295,13 @@ public class Board {
 				}
 				j = -1;
 				while(y2 + j > 0 && y2+j != wKingY){
+					if(board[x2][y2+j].isOccupied()){
+						break;
+					}
 					j--;
 				}
 				if (y2 + j >= 0){
-					if (y2+j == wKingY  && x2 == wKingX){
+					if (y2+j == wKingY && x2 == wKingX){
 						return true;
 					}
 				}
@@ -297,6 +311,9 @@ public class Board {
 				int i = 1;
 				int j= 1;
 				while(x2+i < 8 && y2+j < 8 && x2 != wKingX && y2 != wKingY){
+					if(board[x2+i][y2+j].isOccupied()){
+						break;
+					}
 					i++;
 					j++;
 				}
@@ -306,7 +323,11 @@ public class Board {
 					}
 				}
 				i = -1;
+				j = 1;
 				while(x2+i > 0 && y2+j < 8 && x2 != wKingX && y2 != wKingY){
+					if(board[x2+i][y2+j].isOccupied()){
+						break;
+					}
 					i--;
 					j++;
 				}
@@ -315,12 +336,16 @@ public class Board {
 						return true;
 					}
 				}
+				i = 1;
 				j = -1;
 				while(x2+i < 8 && y2+j > 0 && x2 != wKingX && y2 != wKingY){
+					if(board[x2+i][y2+j].isOccupied()){
+						break;
+					}
 					i++;
 					j--;
 				}
-				if(x2+i <8 && y2+j >=0){
+				if(x2+i <8 && y2-j >=0){
 					if (x2+i == wKingX && y2 +j == wKingY){
 						return true;
 					}
@@ -328,10 +353,13 @@ public class Board {
 				i = -1;
 				j = -1;
 				while(x2+i > 0 && y2+j > 0 && x2 != wKingX && y2 != wKingY){
+					if(board[x2+i][y2+j].isOccupied()){
+						break;
+					}
 					i--;
 					j--;
 				}
-				if(x2+i >=0 && y2+j >=0){
+				if(x2-i >=0 && y2-j >=0){
 					if (x2+i == wKingX && y2 +j == wKingY){
 						return true;
 					}
@@ -364,9 +392,9 @@ public class Board {
 		}
 		
 		temp[x1][y1].setPiece(null);
-		if (y2 == 7 && movedPiece.isWhite()) {
+		if (y2 == 7 && movedPiece.isWhite() && movedPiece.type == Piece.TypePiece.PAWN) {
 			movedPiece = new Piece(true,promote);
-		} else if (y2 == 0 && !movedPiece.isWhite()) {
+		} else if (y2 == 0 && !movedPiece.isWhite() && movedPiece.type == Piece.TypePiece.PAWN) {
 			movedPiece = new Piece(false,promote);
 		}
 		movedPiece.setMoved();
@@ -684,7 +712,7 @@ public class Board {
 				if(Math.abs(x1-x2) == Math.abs(y1-y2)){
 					if(x1-x2 > 0 && y1-y2 > 0){//bottom left
 						for(int i = x1-x2;i>1;i--){
-							if(board[x1+i-1][y1+i-1].isOccupied()){
+							if(board[x2+i-1][y2+i-1].isOccupied()){
 								return;
 							}
 						}

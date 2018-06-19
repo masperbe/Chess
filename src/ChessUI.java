@@ -75,16 +75,50 @@ public class ChessUI {
 		ImageIcon blackRookIcon = new ImageIcon("img/brook.png");
 		ImageIcon blackQueenIcon = new ImageIcon("img/bqueen.png");
 		ImageIcon blackKingIcon = new ImageIcon("img/bking.png");
-		ImageIcon capWPIcon = new ImageIcon("img/wpawnCap.png");
-		//TODO: make the cpaWPIcon and wpawnCap have cap in the same place
+		ImageIcon wPawnCapPNG = new ImageIcon("img/wpawnCap.png");
+		ImageIcon wKnightCapPNG = new ImageIcon("img/wknightCap.png");
+		ImageIcon wBishopCapPNG = new ImageIcon("img/wbishopCap.png");
+		ImageIcon wRookCapPNG = new ImageIcon("img/wrookCap.png");
+		ImageIcon wQueenCapPNG = new ImageIcon("img/wqueenCap.png");
+		ImageIcon bPawnCapPNG = new ImageIcon("img/bpawnCap.png");
+		ImageIcon bKnightCapPNG = new ImageIcon("img/bknightCap.png");
+		ImageIcon bBishopCapPNG = new ImageIcon("img/bbishopCap.png");
+		ImageIcon bRookCapPNG = new ImageIcon("img/brookCap.png");
+		ImageIcon bQueenCapPNG = new ImageIcon("img/bqueenCap.png");
 		JLabel[][] squareIcon = new JLabel[8][8];
 		for (int i=0; i<8; i++)
 			for (int j=0; j<8; j++)
 				squareIcon[i][j] = new JLabel();
-		//TODO: change capWPLbl
-		JLabel[] capWPLbl = new JLabel[8];
+		JLabel[] wPawnLbl = new JLabel[8];
 		for (int i=0; i<8; i++)
-			capWPLbl[i] = new JLabel();
+			wPawnLbl[i] = new JLabel();
+		JLabel[] wKnightLbl = new JLabel[10];
+		JLabel[] wBishopLbl = new JLabel[10];
+		JLabel[] wRookLbl = new JLabel[10];
+		for (int i=0; i<10; i++){
+			wKnightLbl[i] = new JLabel();
+			wBishopLbl[i] = new JLabel();
+			wRookLbl[i] = new JLabel();
+		}
+		JLabel[] wQueenLbl = new JLabel[9];
+		for (int i=0; i<9; i++)
+			wQueenLbl[i] = new JLabel();
+		
+		JLabel[] bPawnLbl = new JLabel[8];
+		for (int i=0; i<8; i++)
+			bPawnLbl[i] = new JLabel();
+		JLabel[] bKnightLbl = new JLabel[10];
+		JLabel[] bBishopLbl = new JLabel[10];
+		JLabel[] bRookLbl = new JLabel[10];
+		for (int i=0; i<10; i++){
+			bKnightLbl[i] = new JLabel();
+			bBishopLbl[i] = new JLabel();
+			bRookLbl[i] = new JLabel();
+		}
+		JLabel[] bQueenLbl = new JLabel[9];
+		for (int i=0; i<9; i++)
+			bQueenLbl[i] = new JLabel();
+		
 		
 		JButton btnNewGame = new JButton("New Game?");
 		btnNewGame.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 82));
@@ -324,9 +358,9 @@ public class ChessUI {
 							throw new Exception();
 					}
 					
-					if ((y2 == 7 || y2 == 0) && board.board[x1][y1].getPiece().type() == Piece.TypePiece.PAWN) {
-						if (destination.length() == 4) {
-							switch (destination.charAt(3)) {
+					/*if ((y2 == 7 || y2 == 0) && board.board[x1][y1].getPiece().type() == Piece.TypePiece.PAWN) {
+						if (destination.length() == 3) {
+							switch (destination.charAt(2)) {
 								case 'Q':
 									promote = Piece.TypePiece.QUEEN;
 									break;
@@ -345,7 +379,7 @@ public class ChessUI {
 						} else {
 							throw new Exception();
 						}
-					}
+					}*/
 					
 					//this is where the move is resolved
 					board.move(x1, y1, x2, y2, promote);
@@ -415,13 +449,62 @@ public class ChessUI {
 							frame.getContentPane().add(squareIcon[i][j]);
 						}
 					}
-					//TODO: change capWPLbl
 					for (int i=0; i<capturedWPawns; i++) {
-						capWPLbl[i].setIcon(capWPIcon);
-						capWPLbl[i].setBounds(12, 135 + (30*i), 25, 25);
-						frame.getContentPane().add(capWPLbl[i]);
+						wPawnLbl[i].setIcon(wPawnCapPNG);
+						wPawnLbl[i].setBounds(12, 135 + (30*i), 25, 25);
+						frame.getContentPane().add(wPawnLbl[i]);
 					}
-					//TODO: Knights,Bishops,Rooks,Queens
+					
+					for (int i=0; i<capturedWKnights; i++) {
+						wKnightLbl[i].setIcon(wKnightCapPNG);
+						wKnightLbl[i].setBounds(42, 135 + (30*i), 25, 25);
+						frame.getContentPane().add(wKnightLbl[i]);
+					}
+					
+					for (int i=0; i<capturedWBishops; i++) {
+						wBishopLbl[i].setIcon(wBishopCapPNG);
+						wBishopLbl[i].setBounds(72, 135 + (30*i), 25, 25);
+						frame.getContentPane().add(wBishopLbl[i]);
+					}
+					
+					for (int i=0; i<capturedWRooks; i++) {
+						wRookLbl[i].setIcon(wRookCapPNG);
+						wRookLbl[i].setBounds(102, 135 + (30*i), 25, 25);
+						frame.getContentPane().add(wRookLbl[i]);
+					}
+					
+					for (int i=0; i<capturedWQueens; i++) {
+						wQueenLbl[i].setIcon(wQueenCapPNG);
+						wQueenLbl[i].setBounds(132, 135 + (30*i), 25, 25);
+						frame.getContentPane().add(wQueenLbl[i]);
+					}
+					
+					for (int i=0; i<capturedBPawns; i++) {
+						bPawnLbl[i].setIcon(bPawnCapPNG);
+						bPawnLbl[i].setBounds(12, 405 + (30*i), 25, 25);
+						frame.getContentPane().add(bPawnLbl[i]);
+					}
+					for (int i=0; i<capturedBKnights; i++) {
+						bKnightLbl[i].setIcon(bKnightCapPNG);
+						bKnightLbl[i].setBounds(42, 405 + (30*i), 25, 25);
+						frame.getContentPane().add(bKnightLbl[i]);
+					}
+					for (int i=0; i<capturedBBishops; i++) {
+						bBishopLbl[i].setIcon(bBishopCapPNG);
+						bBishopLbl[i].setBounds(72, 405 + (30*i), 25, 25);
+						frame.getContentPane().add(bBishopLbl[i]);
+					}
+					for (int i=0; i<capturedBRooks; i++) {
+						bRookLbl[i].setIcon(bRookCapPNG);
+						bRookLbl[i].setBounds(102, 405 + (30*i), 25, 25);
+						frame.getContentPane().add(bRookLbl[i]);
+					}
+					for (int i=0; i<capturedBQueens; i++) {
+						bQueenLbl[i].setIcon(bQueenCapPNG);
+						bQueenLbl[i].setBounds(132, 405 + (30*i), 25, 25);
+						frame.getContentPane().add(bQueenLbl[i]);
+					}
+					
 					
 					if(board.getCheck()) {
 						lblCanMove.setText("You are in check!");

@@ -23,6 +23,7 @@ public class ChessUI {
 	private JFrame frame;
 	private JTextField textFieldOrigin;
 	private JTextField textFieldDestination;
+	private int endGameConsent = 0;
 
 	/**
 	 * Launch the application.
@@ -119,12 +120,15 @@ public class ChessUI {
 		for (int i=0; i<9; i++)
 			bQueenLbl[i] = new JLabel();
 		
+		JLabel lblTextOutput = new JLabel("<html>Would you like to play a game of chess?</html>"); 
+		
 		
 		JButton btnNewGame = new JButton("New Game?");
 		btnNewGame.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 82));
 		btnNewGame.setBounds(216, 0, 568, 115);
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
+				lblTextOutput.setText("White's move");
 				board = new Board();
 				for (int i=0; i<8; i++)
 					for (int j=0; j<8; j++)
@@ -185,30 +189,11 @@ public class ChessUI {
 		});
 		frame.getContentPane().add(btnNewGame);
 		
-		JButton btnDrawAccepted = new JButton("Propose draw?");
-		btnDrawAccepted.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnDrawAccepted.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 30));
-		btnDrawAccepted.setBounds(1005, 660, 165, 80);
-		frame.getContentPane().add(btnDrawAccepted);
-		
-		JLabel lblTextOutput = new JLabel("<html>Would you like to play a game of chess?</html>"); 
 		lblTextOutput.setVerticalAlignment(SwingConstants.TOP);
 		lblTextOutput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTextOutput.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 38));
 		lblTextOutput.setBounds(818, 143, 352, 144);
 		frame.getContentPane().add(lblTextOutput);
-		
-		JButton btnMovePointer = new JButton("Move pointer goes here");
-		btnMovePointer.setBounds(1251, 219, 219, 325);
-		frame.getContentPane().add(btnMovePointer);
-		
-		JLabel lblMovePiece = new JLabel("Move your pieces here");
-		lblMovePiece.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 36));
-		lblMovePiece.setBounds(818, 280, 239, 44);
-		frame.getContentPane().add(lblMovePiece);
 		
 		textFieldOrigin = new JTextField();
 		textFieldOrigin.setBounds(818, 357, 116, 22);
@@ -220,12 +205,62 @@ public class ChessUI {
 		frame.getContentPane().add(textFieldDestination);
 		textFieldDestination.setColumns(10);
 		
+		JButton btnDrawAccepted = new JButton("Propose draw?");
+		btnDrawAccepted.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(endGameConsent == 0){
+					lblTextOutput.setText("<html>To accept, press draw. To deny, press forfeit.</html>");
+					endGameConsent = 1;
+				}else if(endGameConsent == 2){
+					lblTextOutput.setText("The forfeit has been cancled.");
+					endGameConsent = 0;
+				}else if(endGameConsent == 1){
+					lblTextOutput.setText("The game is drawn.");
+					endGameConsent = 0;
+					//TODO: Make the game end without closing the program.
+					//TODO: If a score box is added, add half to each person
+				}
+				
+				
+			}
+		});
+		btnDrawAccepted.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 30));
+		btnDrawAccepted.setBounds(1005, 660, 165, 80);
+		frame.getContentPane().add(btnDrawAccepted);
+		
+		JButton btnMovePointer = new JButton("Move pointer goes here");
+		btnMovePointer.setBounds(1251, 219, 219, 325);
+		frame.getContentPane().add(btnMovePointer);
+		
+		JLabel lblMovePiece = new JLabel("Move your pieces here");
+		lblMovePiece.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 36));
+		lblMovePiece.setBounds(818, 280, 239, 44);
+		frame.getContentPane().add(lblMovePiece);
+		
 		JLabel lblCanMove = new JLabel("");
 		lblCanMove.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 36));
 		lblCanMove.setBounds(818, 567, 352, 80);
 		frame.getContentPane().add(lblCanMove);
 		
 		JButton btnForfeit = new JButton("Forfeit?");
+		btnForfeit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(endGameConsent == 0){
+					lblTextOutput.setText("<html>Are you sure you want to forfeit? Press again for yes, press draw for no.</html>");
+					endGameConsent = 2;
+				}else if(endGameConsent == 1){
+					lblTextOutput.setText("The draw has been cancled.");
+					endGameConsent = 0;
+				}else if(endGameConsent == 2){
+					lblTextOutput.setText("The game is forfeit.");
+					endGameConsent = 0;
+					//TODO: Make the game end without closing the program.
+					//TODO: If a score box is added, add one point to the person who one
+				}
+				
+				
+			}
+		});
 		btnForfeit.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 30));
 		btnForfeit.setBounds(828, 660, 165, 80);
 		frame.getContentPane().add(btnForfeit);
@@ -385,6 +420,9 @@ public class ChessUI {
 					board.move(x1, y1, x2, y2, promote);
 					textFieldOrigin.setText("");
 					textFieldDestination.setText("");
+					if(board.isWhiteMove()){
+						lblTextOutput.setText("White's move");
+					}else lblTextOutput.setText("Black's move");
 					
 					for (int i=0; i<8; i++)
 						for (int j=0; j<8; j++)

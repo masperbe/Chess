@@ -247,10 +247,10 @@ public class Board {
 				else return false;
 			}
 			if(movedPiece.type() == Piece.TypePiece.PAWN){
-				if(x2 + 1 == wKingX && y2 + 1 == wKingY){
+				if(x2 + 1 == wKingX && y2 - 1 == wKingY){
 					return true;
 				}
-				if(x2 - 1 == wKingX && y2 + 1 == wKingY){
+				if(x2 - 1 == wKingX && y2 - 1 == wKingY){
 					return true;
 				}
 				else return false;
@@ -462,7 +462,7 @@ public class Board {
 		}
 		if(tempKingX+i < 8 && tempKingY+j < 8 && temp[tempKingX+i][tempKingY+j].getPiece().isWhite != whiteMove){
 			Piece.TypePiece type = temp[tempKingX+i][tempKingY+j].getPiece().type();
-			if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && j==1) || type == Piece.TypePiece.QUEEN || (type == Piece.TypePiece.PAWN && j==1)){
+			if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && j==1) || type == Piece.TypePiece.QUEEN || (type == Piece.TypePiece.PAWN && j==1 && !temp[tempKingX+i][tempKingY+j].getPiece().isWhite)){
 				return false;
 			}
 		}
@@ -477,7 +477,7 @@ public class Board {
 		}
 		if(tempKingX+i < 8 && tempKingY+j > 0 && temp[tempKingX+i][tempKingY+j].getPiece().isWhite != whiteMove){
 			Piece.TypePiece type = temp[tempKingX+i][tempKingY+j].getPiece().type();
-			if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && i==1) || type == Piece.TypePiece.QUEEN){
+			if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && i==1) || type == Piece.TypePiece.QUEEN || (type == Piece.TypePiece.PAWN && i==1 && temp[tempKingX+i][tempKingY+j].getPiece().isWhite)){
 				return false;
 			}
 		}
@@ -491,7 +491,7 @@ public class Board {
 		}
 		if(tempKingX+i > 0 && tempKingY+j > 0 && temp[tempKingX+i][tempKingY+j].getPiece().isWhite != whiteMove){
 			Piece.TypePiece type = temp[tempKingX+i][tempKingY+j].getPiece().type();
-			if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && j==-1) || type == Piece.TypePiece.QUEEN){
+			if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && j==-1) || type == Piece.TypePiece.QUEEN || (type == Piece.TypePiece.PAWN && j==-1 && temp[tempKingX+i][tempKingY+j].getPiece().isWhite)){
 				return false;
 			}
 		}
@@ -505,7 +505,7 @@ public class Board {
 		}
 		if(tempKingX+i > 0 && tempKingY+j < 8 && temp[tempKingX+i][tempKingY+j].getPiece().isWhite != whiteMove){
 			Piece.TypePiece type = temp[tempKingX+i][tempKingY+j].getPiece().type();
-			if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && j==1) || type == Piece.TypePiece.QUEEN || (type == Piece.TypePiece.PAWN && j==1)){
+			if(type == Piece.TypePiece.BISHOP || (type == Piece.TypePiece.KING && j==1) || type == Piece.TypePiece.QUEEN || (type == Piece.TypePiece.PAWN && j==1 && !temp[tempKingX+i][tempKingY+j].getPiece().isWhite)){
 				return false;
 			}
 		}

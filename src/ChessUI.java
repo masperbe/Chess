@@ -121,6 +121,9 @@ public class ChessUI {
 			bQueenLbl[i] = new JLabel();
 		
 		JLabel lblTextOutput = new JLabel("<html>Would you like to play a game of chess?</html>"); 
+		textFieldDestination = new JTextField();
+		JButton btnDrawAccepted = new JButton("Propose draw?");
+		JButton btnForfeit = new JButton("Forfeit?");
 		
 		
 		JButton btnNewGame = new JButton("New Game?");
@@ -129,6 +132,10 @@ public class ChessUI {
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				lblTextOutput.setText("White's move");
+				textFieldDestination.setEnabled(true);
+				btnDrawAccepted.setEnabled(true);
+				btnForfeit.setEnabled(true);
+				//TODO: make the forfeit button and draw button appear so you have to start a game to draw or forfeit
 				board = new Board();
 				for (int i=0; i<8; i++)
 					for (int j=0; j<8; j++)
@@ -200,12 +207,11 @@ public class ChessUI {
 		frame.getContentPane().add(textFieldOrigin);
 		textFieldOrigin.setColumns(10);
 		
-		textFieldDestination = new JTextField();
 		textFieldDestination.setBounds(818, 427, 116, 22);
 		frame.getContentPane().add(textFieldDestination);
 		textFieldDestination.setColumns(10);
 		
-		JButton btnDrawAccepted = new JButton("Propose draw?");
+		
 		btnDrawAccepted.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(endGameConsent == 0){
@@ -214,23 +220,25 @@ public class ChessUI {
 				}else if(endGameConsent == 2){
 					lblTextOutput.setText("The forfeit has been cancled.");
 					endGameConsent = 0;
+					if(board.isWhiteMove()){
+						lblTextOutput.setText("White's move");
+					}else lblTextOutput.setText("Black's move");
 				}else if(endGameConsent == 1){
 					lblTextOutput.setText("The game is drawn.");
+					btnDrawAccepted.setEnabled(false);
+					btnForfeit.setEnabled(false);
+					textFieldDestination.setEnabled(false);
 					endGameConsent = 0;
-					//TODO: Make the game end without closing the program.
 					//TODO: If a score box is added, add half to each person
 				}
 				
 				
 			}
 		});
+		btnDrawAccepted.setEnabled(false);
 		btnDrawAccepted.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 30));
 		btnDrawAccepted.setBounds(1005, 660, 165, 80);
 		frame.getContentPane().add(btnDrawAccepted);
-		
-		JButton btnMovePointer = new JButton("Move pointer goes here");
-		btnMovePointer.setBounds(1251, 219, 219, 325);
-		frame.getContentPane().add(btnMovePointer);
 		
 		JLabel lblMovePiece = new JLabel("Move your pieces here");
 		lblMovePiece.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 36));
@@ -242,7 +250,7 @@ public class ChessUI {
 		lblCanMove.setBounds(818, 567, 352, 80);
 		frame.getContentPane().add(lblCanMove);
 		
-		JButton btnForfeit = new JButton("Forfeit?");
+		
 		btnForfeit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(endGameConsent == 0){
@@ -251,8 +259,16 @@ public class ChessUI {
 				}else if(endGameConsent == 1){
 					lblTextOutput.setText("The draw has been cancled.");
 					endGameConsent = 0;
+					if(board.isWhiteMove()){
+						lblTextOutput.setText("White's move");
+					}else lblTextOutput.setText("Black's move");
 				}else if(endGameConsent == 2){
-					lblTextOutput.setText("The game is forfeit.");
+					if(board.isWhiteMove()){
+						lblTextOutput.setText("<html>The game is forfeit. Black has won.</html>");
+					}else{lblTextOutput.setText("<html>The game is forfeit. White has won.</html>");}
+					btnDrawAccepted.setEnabled(false);
+					btnForfeit.setEnabled(false);
+					textFieldDestination.setEnabled(false);
 					endGameConsent = 0;
 					//TODO: Make the game end without closing the program.
 					//TODO: If a score box is added, add one point to the person who one
@@ -261,6 +277,7 @@ public class ChessUI {
 				
 			}
 		});
+		btnForfeit.setEnabled(false);
 		btnForfeit.setFont(new Font("Microsoft Himalaya", Font.PLAIN, 30));
 		btnForfeit.setBounds(828, 660, 165, 80);
 		frame.getContentPane().add(btnForfeit);

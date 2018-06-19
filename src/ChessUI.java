@@ -512,6 +512,9 @@ public class ChessUI {
 					else{
 						lblCanMove.setText("");
 					}
+					if(board.valid == false){
+						lblCanMove.setText("That move is illegal.");
+					}
 					frame.getContentPane().add(boardImg);
 					frame.repaint();
 				}

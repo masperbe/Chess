@@ -11,6 +11,7 @@ public class Board {
 	private int bKingX;
 	private int bKingY;
 	private boolean check = false;
+	boolean valid = false;
 	
 	public Board() {
 		board = new Square[8][8];
@@ -127,7 +128,7 @@ public class Board {
 					}
 					i--;
 				}
-				if (x2 + i > 0){
+				if (x2 + i >= 0){
 					if (x2+i == bKingX && y2 == bKingY){
 						return true;
 					}
@@ -151,7 +152,7 @@ public class Board {
 					}
 					j--;
 				}
-				if (y2 + j > 0){
+				if (y2 + j >= 0){
 					if (y2+j == bKingY && x2 == bKingX){
 						return true;
 					}
@@ -181,7 +182,7 @@ public class Board {
 					i--;
 					j++;
 				}
-				if(x2+i >0 && y2+1 <8){
+				if(x2+i >=0 && y2+1 <8){
 					if (x2+i == bKingX && y2 +j == bKingY){
 						return true;
 					}
@@ -194,7 +195,7 @@ public class Board {
 					i++;
 					j--;
 				}
-				if(x2+i <8 && y2-1 >0){
+				if(x2+i <8 && y2-1 >=0){
 					if (x2+i == bKingX && y2 +j == bKingY){
 						return true;
 					}
@@ -208,7 +209,7 @@ public class Board {
 					i--;
 					j--;
 				}
-				if(x2-i >0 && y2-1 >0){
+				if(x2-i >=0 && y2-j >=0){
 					if (x2+i == bKingX && y2 +j == bKingY){
 						return true;
 					}
@@ -267,7 +268,7 @@ public class Board {
 				while(x2 + i > 0 && x2+i != wKingX){
 					i--;
 				}
-				if (x2 + i > 0){
+				if (x2 + i >= 0){
 					if (x2+i == wKingX && y2 == wKingY){
 						return true;
 					}
@@ -285,7 +286,7 @@ public class Board {
 				while(y2 + j > 0 && y2+j != wKingY){
 					j--;
 				}
-				if (y2 + j > 0){
+				if (y2 + j >= 0){
 					if (y2+j == wKingY  && x2 == wKingX){
 						return true;
 					}
@@ -305,32 +306,32 @@ public class Board {
 					}
 				}
 				i = -1;
-				while(x2+i < 0 && y2+j < 8 && x2 != wKingX && y2 != wKingY){
+				while(x2+i > 0 && y2+j < 8 && x2 != wKingX && y2 != wKingY){
 					i--;
 					j++;
 				}
-				if(x2+i <0 && y2+j <8){
+				if(x2+i >=0 && y2+j <8){
 					if (x2+i == wKingX && y2 +j == wKingY){
 						return true;
 					}
 				}
 				j = -1;
-				while(x2+i < 8 && y2+j < 0 && x2 != wKingX && y2 != wKingY){
+				while(x2+i < 8 && y2+j > 0 && x2 != wKingX && y2 != wKingY){
 					i++;
 					j--;
 				}
-				if(x2+i <8 && y2+j <0){
+				if(x2+i <8 && y2+j >=0){
 					if (x2+i == wKingX && y2 +j == wKingY){
 						return true;
 					}
 				}
 				i = -1;
 				j = -1;
-				while(x2+i < 0 && y2+j < 0 && x2 != wKingX && y2 != wKingY){
+				while(x2+i > 0 && y2+j > 0 && x2 != wKingX && y2 != wKingY){
 					i--;
 					j--;
 				}
-				if(x2+i <0 && y2+j <0){
+				if(x2+i >=0 && y2+j >=0){
 					if (x2+i == wKingX && y2 +j == wKingY){
 						return true;
 					}
@@ -343,6 +344,7 @@ public class Board {
 	// The purpose of this method is to check to see whether the selected move would leave the
 	// player on the move in check. If so, false is returned. If not, the move is completed and true is returned.
 	private boolean executeMove(int x1, int y1, int x2, int y2, Piece movedPiece, Piece.TypePiece promote) {
+		valid = false;
 		Square[][] temp = new Square[8][8];
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[i].length; j++) {
@@ -525,6 +527,7 @@ public class Board {
 			bKingX = tempKingX;
 			bKingY = tempKingY;
 		}
+		valid = true;
 		check = opposingCheck(x1, y1, x2, y2, movedPiece);
 		return true;
 	}

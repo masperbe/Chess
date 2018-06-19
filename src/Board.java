@@ -436,6 +436,7 @@ public class Board {
 				return false;
 			}
 		}
+		//h
 		
 		//to the bottom right
 		i = 1;
